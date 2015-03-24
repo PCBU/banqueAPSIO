@@ -15,8 +15,7 @@ public class EditionReleves {
         Imprimer();
     }
 
-    private Void Imprimer() {
+    private void Imprimer() {
         System.out.println(theComptes.getSolde());
-        return null;
     }
 }

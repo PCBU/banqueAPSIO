@@ -12,10 +12,9 @@ public class EditionAvertissements {
         Imprimer();
     }
 
-    private Void Imprimer() {
+    private void Imprimer() {
         if (theCompteDepot.getSolde() < 0) {
             System.out.println(theCompteDepot.getSolde());
         }
-        return null;
     }
 }
