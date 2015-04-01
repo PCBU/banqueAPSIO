@@ -5,12 +5,17 @@ package Metier;
 
 public class CompteDepot extends Comptes {
     private double tauxAgios = 0.2;
+    private double decouvertAutorise =0 ;
 
     /**
      * @roseuid 3D246183035C
      */
     public CompteDepot(int iCodeCpt) {
         super(iCodeCpt);
+    }
+    public CompteDepot(int iCodeCpt, double decouvertAutorise) {
+        super(iCodeCpt);
+        this.decouvertAutorise = decouvertAutorise;
     }
 
     /**
