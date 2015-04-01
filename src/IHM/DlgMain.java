@@ -64,7 +64,7 @@ public class DlgMain extends JFrame {
         setTitle("Gestion des comptes - Employé");
 
         pack();
-        show();
+        setVisible(true);
 
         //initialisations
         listeClient = new ListeClient();

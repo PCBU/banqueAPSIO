@@ -2,11 +2,12 @@
 
 package IHM;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-
-import Application.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class DlgListeCompte extends JFrame {
     DlgMain dlgMain;
@@ -16,12 +17,14 @@ public class DlgListeCompte extends JFrame {
     public DlgCreateCompte theDlgCreateCompte;
     public DlgDebiter theDlgDebiter;
     public DlgTransferer theDlgTransferer;
+    public DlgOperationsCompte theDlgOperations;
 
     AdaptateurBoutons unAdaptateurBoutons;
     JButton bCrediter;
     JButton bDebiter;
     JButton bNouveau;
     JButton bDetails;
+    JButton bOperations;
     JButton bSupprimer;
     JButton bFermer;
     JButton bTransferer;
@@ -49,6 +52,8 @@ public class DlgListeCompte extends JFrame {
         pBouton.add(bNouveau);
         bDetails = new JButton("Détails des comptes");
         pBouton.add(bDetails);
+        bOperations = new JButton("Opérations du compte");
+        pBouton.add(bOperations);
         bSupprimer = new JButton("Fermer compte");
         pBouton.add(bSupprimer);
         bFermer = new JButton("Fermer");
@@ -59,17 +64,18 @@ public class DlgListeCompte extends JFrame {
         bDebiter.addActionListener(unAdaptateurBoutons);
         bNouveau.addActionListener(unAdaptateurBoutons);
         bDetails.addActionListener(unAdaptateurBoutons);
+        bOperations.addActionListener(unAdaptateurBoutons);
         bFermer.addActionListener(unAdaptateurBoutons);
         bSupprimer.addActionListener(unAdaptateurBoutons);
         bTransferer.addActionListener(unAdaptateurBoutons);
-        addWindowListener((WindowListener) new AdapFenetre());
+        addWindowListener(new AdapFenetre());
 
         getContentPane().add("Center", listCompte);
         getContentPane().add("South", pBouton);
         setTitle("Liste des comptes");
 
         pack();
-        show();
+        setVisible(true);
     }
 
     public void ReloadListe() {
@@ -110,7 +116,7 @@ public class DlgListeCompte extends JFrame {
                     iNextCode = dlgMain.listeCompte.getCodeCompte(dlgMain.listeCompte.size() - 1) + 1;
                 }
                 theDlgCreateCompte = new DlgCreateCompte(dlgMain, -1, iNextCode);
-                theDlgCreateCompte.addWindowListener((WindowListener) new AdapFenetreCreate());
+                theDlgCreateCompte.addWindowListener(new AdapFenetreCreate());
             } else if (e.getSource() == bDebiter) {
                 theDlgDebiter = new DlgDebiter(dlgMain, listCompte.getSelectedIndex());
             } else if (e.getSource() == bTransferer) {
@@ -123,6 +129,8 @@ public class DlgListeCompte extends JFrame {
                 dlgMain.listeCompte.supprimerComptes(Integer.parseInt(listCompte.getSelectedItem()));
                 ReloadListe();
                 dlgMain.listeClient.removeCompteFromClient(Integer.parseInt(listCompte.getSelectedItem()));
+            } else if (e.getSource() == bOperations) {
+                theDlgOperations = new DlgOperationsCompte(dlgMain, listCompte.getSelectedIndex());
             }
         }
     }//fin de AdaptateurBoutons
