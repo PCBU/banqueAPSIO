@@ -78,7 +78,7 @@ public class ListeCompte {
             }
         }
         if (c == null) {
-            System.out.println("Erreur de récupération du compte : " + iCode);
+            System.out.println("Erreur de rÃ©cupÃ©ration du compte : " + iCode);
         }
         return c;
     }
@@ -117,7 +117,7 @@ public class ListeCompte {
                 if (dMontant < 0) {
                     if (c.getSolde() + dMontant < 0) {
                         if (bAdmin) {
-                            c.debiter(dMontant * -1, sDesc + " (Débit exceptionnel)");
+                            c.debiter(dMontant * -1, sDesc + " (DÃ©bit exceptionnel)");
                         } else {
                             bOK = false;
                         }

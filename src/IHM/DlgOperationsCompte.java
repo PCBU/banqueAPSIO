@@ -33,7 +33,7 @@ public class DlgOperationsCompte extends JFrame {
         unAdaptateurBoutons = new AdaptateurBoutons();
         bFermer.addActionListener(unAdaptateurBoutons);
 
-        setTitle("Opérations du compte");
+        setTitle("OpÃ©rations du compte");
 
         pack();
         setVisible(true);

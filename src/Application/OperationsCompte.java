@@ -17,7 +17,7 @@ public class OperationsCompte {
      */
     public OperationsCompte(ListeCompte listeCompte, int codeCpt) {
         String sMvt[][] = new String[100][100];
-        String nomColonnes[] = {"Compte", "Solde", "Date mouvement", "Mouvement", "Crédit", "Débit", "Description"};
+        String nomColonnes[] = {"Compte", "Solde", "Date mouvement", "Mouvement", "CrÃ©dit", "DÃ©bit", "Description"};
         int k = 0;
 
         sMvt[k][0] = Integer.toString(listeCompte.getCodeCompte(codeCpt));

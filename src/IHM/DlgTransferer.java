@@ -64,7 +64,7 @@ public class DlgTransferer extends JFrame {
         Panel pBouton = new Panel();
         FlowLayout flBouton = new FlowLayout();
         pBouton.setLayout(flBouton);
-        bTransferer = new JButton("Transférer");
+        bTransferer = new JButton("TransfÃ©rer");
         bAnnuler = new JButton("Annuler");
         pBouton.add(bTransferer);
         pBouton.add(bAnnuler);
@@ -110,7 +110,7 @@ public class DlgTransferer extends JFrame {
 
         addWindowListener((WindowListener) new AdapFenetre());
 
-        setTitle("Transférer compte à compte");
+        setTitle("TransfÃ©rer compte Ã  compte");
 
         pack();
         show();
@@ -144,10 +144,10 @@ public class DlgTransferer extends JFrame {
                 int iCptArr = Integer.parseInt(cbCompteArrivee.getSelectedItem());
                 String sDescDep = "Transfert vers le compte " + iCptArr;
                 String sDescArr = "Transfert du compte " + iCptDep;
-                //Débit du compte source
+                //DÃ©bit du compte source
                 boolean bOK = dlgMain.listeCompte.addMouvement(iCptDep, dMont * -1, sDescDep, dlgMain.bAdministrateur);
                 if (bOK) {
-                    //Crédit du compte destination
+                    //CrÃ©dit du compte destination
                     dlgMain.listeCompte.addMouvement(iCptArr, dMont, sDescArr, dlgMain.bAdministrateur);
                 }
 

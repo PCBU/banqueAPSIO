@@ -40,7 +40,7 @@ public class DlgListeClient extends JFrame {
         pBouton.add(bNouvCpt);
         bListeCpt = new JButton("Lister comptes");
         pBouton.add(bListeCpt);
-        bTransferer = new JButton("Transférer");
+        bTransferer = new JButton("TransfÃ©rer");
         pBouton.add(bTransferer);
         bFermer = new JButton("Fermer");
         pBouton.add(bFermer);
@@ -93,7 +93,7 @@ public class DlgListeClient extends JFrame {
                         int iCodeCli = dlgMain.listeClient.getCode(i);
                         if (iCodeCli == iCode) {
                             dlgMain.listeClient.supprimerClient(i);
-                            System.out.println("Client supprimé : " + sCode);
+                            System.out.println("Client supprimÃ© : " + sCode);
                             ReloadListe();
                         }
                     }

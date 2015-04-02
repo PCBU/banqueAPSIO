@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/Application/CalculAgios.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Application/CalculInteret.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Application/ConsulterCompte.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Application/Crediter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Application/CreerClient.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Application/Debiter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Application/DetailCompte.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Application/EditionAvertissements.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Application/EditionReleves.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Application/ListeClient.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Application/ListeCompte.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Application/OperationsCompte.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Application/OuvrirCompte.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/Banque.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/IHM/DlgCreateClient.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/IHM/DlgCreateCompte.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/IHM/DlgCrediter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/IHM/DlgDebiter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/IHM/DlgDetailCompte.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/IHM/DlgListeClient.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/IHM/DlgListeCompte.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/IHM/DlgMain.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/IHM/DlgOperationsCompte.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/IHM/DlgTransferer.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Metier/Clients.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Metier/CompteDepot.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Metier/CompteEpargne.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Metier/Comptes.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Metier/Mouvements.java" charset="UTF-8" />
   </component>
 </project>

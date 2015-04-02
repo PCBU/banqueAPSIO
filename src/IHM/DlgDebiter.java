@@ -38,7 +38,7 @@ public class DlgDebiter extends JFrame {
         Panel pBouton = new Panel();
         FlowLayout flBouton = new FlowLayout();
         pBouton.setLayout(flBouton);
-        bDebiter = new JButton("Débiter");
+        bDebiter = new JButton("DÃ©biter");
         bAnnuler = new JButton("Annuler");
         pBouton.add(bDebiter);
         pBouton.add(bAnnuler);
@@ -73,7 +73,7 @@ public class DlgDebiter extends JFrame {
 
         addWindowListener((WindowListener) new AdapFenetre());
 
-        setTitle("Débiter un compte");
+        setTitle("DÃ©biter un compte");
 
         pack();
         show();

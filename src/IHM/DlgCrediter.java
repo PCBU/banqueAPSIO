@@ -37,7 +37,7 @@ public class DlgCrediter extends JFrame {
         Panel pBouton = new Panel();
         FlowLayout flBouton = new FlowLayout();
         pBouton.setLayout(flBouton);
-        bCrediter = new JButton("Créditer");
+        bCrediter = new JButton("CrÃ©diter");
         bAnnuler = new JButton("Annuler");
         pBouton.add(bCrediter);
         pBouton.add(bAnnuler);
@@ -82,7 +82,7 @@ public class DlgCrediter extends JFrame {
 
         addWindowListener((WindowListener) new AdapFenetre());
 
-        setTitle("Créditer un compte");
+        setTitle("CrÃ©diter un compte");
 
         pack();
         show();

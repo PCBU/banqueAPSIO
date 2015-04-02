@@ -16,6 +16,6 @@ public class CalculInteret {
                 theCompteEpargne = (CompteEpargne) lc.getCompte(i);
             }
         }
-        theCompteEpargne.crediter(theCompteEpargne.calculerInteret(), "Intérêts");
+        theCompteEpargne.crediter(theCompteEpargne.calculerInteret(), "IntÃ©rÃªts");
     }
 }

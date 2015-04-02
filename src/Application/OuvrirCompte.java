@@ -30,18 +30,18 @@ public class OuvrirCompte {
 
     public CompteEpargne createCompteEpargne() {
         CompteEpargne ce = new CompteEpargne(iCodeCompte);
-        ce.crediter(dDepot, "Dépôt initial");
+        ce.crediter(dDepot, "DÃ©pÃ´t initial");
         return ce;
     }
 
     public CompteDepot createCompteDepot() {
         CompteDepot cd = new CompteDepot(iCodeCompte);
-        cd.crediter(dDepot, "Dépôt initial");
+        cd.crediter(dDepot, "DÃ©pÃ´t initial");
         return cd;
     }
     public CompteDepot createCompteDepot(double montantDecouvert) {
         CompteDepot cd = new CompteDepot(iCodeCompte, montantDecouvert);
-        cd.crediter(dDepot, "Dépôt initial");
+        cd.crediter(dDepot, "DÃ©pÃ´t initial");
         return cd;
     }
 }

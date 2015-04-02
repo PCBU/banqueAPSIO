@@ -31,7 +31,7 @@ public class DlgDetailCompte extends JFrame {
         unAdaptateurBoutons = new AdaptateurBoutons();
         bFermer.addActionListener(unAdaptateurBoutons);
 
-        setTitle("Détail des comptes");
+        setTitle("DÃ©tail des comptes");
 
         pack();
         setVisible(true);
