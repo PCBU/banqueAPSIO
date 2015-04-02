@@ -2,6 +2,7 @@
 
 package Application;
 
+import IHM.DlgMessage;
 import Metier.*;
 
 public class Debiter {
@@ -21,6 +22,9 @@ public class Debiter {
                     CompteDepot CD = (CompteDepot) theComptes;
                     CD.debiterExceptionnel(montant, description + " (Débit exceptionnel)");
                 }
+            }
+            else{
+                new DlgMessage("Debit impossible");
             }
         }
     }

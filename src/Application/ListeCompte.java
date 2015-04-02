@@ -2,6 +2,7 @@
 
 package Application;
 
+import IHM.DlgMessage;
 import Metier.Comptes;
 import Metier.CompteEpargne;
 import Metier.CompteDepot;
@@ -80,7 +81,12 @@ public class ListeCompte {
     public boolean supprimerComptes(int iCode) {
         for (int i = 0; i < size(); i++) {
             if (getCodeCompte(i) == iCode) {
-                theComptes.remove(i);
+                if(getCompte(i).getSolde() == 0) {
+                    theComptes.remove(i);
+                }
+                else{
+                    new DlgMessage("Le compte n'est pas vide");
+                }
             }
         }
         return true;
