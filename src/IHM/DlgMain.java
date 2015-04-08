@@ -24,6 +24,7 @@ public class DlgMain extends JFrame {
     JButton bAgios;
     JButton bTousComptes;
     JButton bQuitter;
+    //wtf
 
     AdaptateurBoutons unAdaptateurBoutons;
 
