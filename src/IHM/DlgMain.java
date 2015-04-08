@@ -64,6 +64,7 @@ public class DlgMain extends JFrame {
 
         addWindowListener(new AdapFenetre());
 
+        setLocationRelativeTo(null);
 
         //ajout des controles
         getContentPane().setLayout(new GridLayout(2, 3));

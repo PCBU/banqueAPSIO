@@ -59,8 +59,9 @@ public class DlgListeClient extends JFrame {
 
         setTitle("Liste des clients");
 
+        setLocationRelativeTo(null);
         pack();
-        show();
+        setVisible(true);
     }
 
     public void ReloadListe() {

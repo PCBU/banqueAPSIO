@@ -19,7 +19,7 @@ public class CompteEpargne extends Comptes {
 
         double dResultat = 0, dSolde;
         dSolde = getSolde();
-        if (dSolde > 0) {
+        if (dSolde  > 0) {
             dResultat = tauxInteret * dSolde;
         }
         return dResultat;

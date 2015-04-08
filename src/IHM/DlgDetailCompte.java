@@ -33,6 +33,7 @@ public class DlgDetailCompte extends JFrame {
 
         setTitle("Détail des comptes");
 
+        setLocationRelativeTo(null);
         pack();
         setVisible(true);
     }

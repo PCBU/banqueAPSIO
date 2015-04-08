@@ -75,6 +75,7 @@ public class DlgListeCompte extends JFrame {
         getContentPane().add("South", pBouton);
         setTitle("Liste des comptes");
 
+        setLocationRelativeTo(null);
         pack();
         setVisible(true);
     }

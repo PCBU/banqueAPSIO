@@ -35,6 +35,7 @@ public class DlgOperationsCompte extends JFrame {
 
         setTitle("Opérations du compte");
 
+        setLocationRelativeTo(null);
         pack();
         setVisible(true);
     }

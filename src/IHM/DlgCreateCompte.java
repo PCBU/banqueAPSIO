@@ -116,10 +116,11 @@ public class DlgCreateCompte extends JFrame {
         rbCptDep.addActionListener(unAdaptateurBoutons);
         addWindowListener((WindowListener) new AdapFenetre());
 
-        setTitle("CrÃ©er un compte");
+        setTitle("Créer un compte");
 
+        setLocationRelativeTo(null);
         pack();
-        show();
+        setVisible(true);
     }
 
     public void ReloadListe() {

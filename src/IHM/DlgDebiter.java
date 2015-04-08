@@ -75,8 +75,9 @@ public class DlgDebiter extends JFrame {
 
         setTitle("Débiter un compte");
 
+        setLocationRelativeTo(null);
         pack();
-        show();
+        setVisible(true);
 
         cbCompte.addItemListener
                 (new ItemListener() {

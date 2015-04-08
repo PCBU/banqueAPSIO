@@ -112,8 +112,9 @@ public class DlgTransferer extends JFrame {
 
         setTitle("Transférer compte à compte");
 
+        setLocationRelativeTo(null);
         pack();
-        show();
+        setVisible(true);
     }
 
     private void ReloadListes() {

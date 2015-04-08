@@ -84,8 +84,9 @@ public class DlgCrediter extends JFrame {
 
         setTitle("Créditer un compte");
 
+        setLocationRelativeTo(null);
         pack();
-        show();
+        setVisible(true);
     }
 
     public void ReloadListe() {
