@@ -1,6 +1,8 @@
 package Metier;
 
 
+import IHM.DlgMessage;
+
 public class CompteEpargne extends Comptes {
     private double tauxInteret = 0.2;
 
@@ -24,4 +26,14 @@ public class CompteEpargne extends Comptes {
         }
         return dResultat;
     }
+
+    public void debiter(double montant, String description, boolean bAdmin) {
+
+        if (this.getSolde() - montant >= 0) {
+            this.debiter(montant, description);
+        } else {
+            new DlgMessage("Debit impossible");
+        }
+    }
+
 }

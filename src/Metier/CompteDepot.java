@@ -45,20 +45,15 @@ public class CompteDepot extends Comptes {
     }
 
     public double getDecouvertAutorise() {
-        return decouvertAutorise;
+        return this.decouvertAutorise;
     }
 
     public void debiter(double montant, String description, boolean bAdmin) {
-
-        if (this.getSolde() - montant >= this.getDecouvertAutorise()) {
+          if ( (this.getSolde() - montant) >= -(this.getDecouvertAutorise())) {
             this.debiter(montant, description);
         } else {
             if (bAdmin) {
-                String sClassName = (this.getClass()).getName();
-                if (sClassName.equals("Metier.CompteDepot")) {
-                    CompteDepot CD = (CompteDepot) this;
-                    CD.debiterExceptionnel(montant, description + " (Débit exceptionnel)");
-                }
+                this.debiterExceptionnel(montant, description + " (Débit exceptionnel)");
             }
             else{
                 new DlgMessage("Debit impossible");

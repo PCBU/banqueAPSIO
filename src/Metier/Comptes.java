@@ -110,21 +110,7 @@ public class Comptes {
     }
 
     public void debiter(double montant, String description, boolean bAdmin) {
-
-        if (this.getSolde() - montant >= 0) {
-            this.debiter(montant, description);
-        } else {
-            if (bAdmin) {
-                String sClassName = (this.getClass()).getName();
-                if (sClassName.equals("Metier.CompteDepot")) {
-                    CompteDepot CD = (CompteDepot) this;
-                    CD.debiterExceptionnel(montant, description + " (Débit exceptionnel)");
-                }
-            }
-            else{
-                new DlgMessage("Debit impossible");
-            }
-        }
+        // Code dans les classes filles
     }
 }
 
