@@ -30,7 +30,9 @@ public class CompteDepot extends Comptes {
         }
         return dResultat;
     }
-
+    public double getAutorisationDecouvert(){
+        return decouvertAutorise;
+    }
     /**
      * @param montant
      * @param description
