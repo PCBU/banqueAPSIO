@@ -129,6 +129,7 @@ public class ListeCompte {
                             bOK = false;
                         }
                     } else {
+
                         c.debiter(dMontant * -1, sDesc);
                     }
                 } else {
