@@ -6,7 +6,7 @@ import IHM.DlgMessage;
 import Metier.Comptes;
 import Metier.CompteEpargne;
 import Metier.CompteDepot;
-import Metier.Clients;
+import Metier.CompteEpargne;
 
 import java.util.Vector;
 
@@ -25,6 +25,10 @@ public class ListeCompte {
         addCompteDepot(4);
     }
 
+    public ListeCompte(Vector<Comptes> comptes) {
+        theComptes = new Vector(comptes);
+    }
+
     public void addCompte(int iCodeCpt) {
         theComptes.add(new Comptes(iCodeCpt));
     }
@@ -35,6 +39,9 @@ public class ListeCompte {
 
     public void addCompteDepot(int iCodeCpt) {
         theComptes.add(new CompteDepot(iCodeCpt));
+    }
+    public void addCompteDepot(int iCodeCpt, double decouvertAutorise) {
+        theComptes.add(new CompteDepot(iCodeCpt, decouvertAutorise));
     }
 
     public void addCompteEpargne(CompteEpargne Cpt) {

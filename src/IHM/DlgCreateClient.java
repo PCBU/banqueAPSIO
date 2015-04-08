@@ -57,7 +57,7 @@ public class DlgCreateClient extends JFrame {
         Panel pBouton = new Panel();
         FlowLayout flBouton = new FlowLayout();
         pBouton.setLayout(flBouton);
-        bValider = new JButton("Créer client");
+        bValider = new JButton("CrÃ©er client");
         bCompte = new JButton("Compte");
         bAnnuler = new JButton("Annuler");
         bCompte.setEnabled(false);
@@ -86,7 +86,7 @@ public class DlgCreateClient extends JFrame {
             if (e.getSource() == bAnnuler) {
                 setVisible(false);
             } else if (e.getSource() == bValider) {
-                if (bValider.getText().equals("Créer client")) {
+                if (bValider.getText().equals("CrÃ©er client")) {
                     String sNom, sAdr, sCode;
                     sNom = tfNom.getText();
                     sAdr = tfAdr.getText();
@@ -103,7 +103,7 @@ public class DlgCreateClient extends JFrame {
                         System.out.println("Les champs ne doivent pas etre vide");
                     }
                 } else if (bValider.getText().equals("Nouveau")) {
-                    bValider.setText("Créer client");
+                    bValider.setText("CrÃ©er client");
                     bCompte.setEnabled(false);
                     tfAdr.setEnabled(true);
                     tfNom.setEnabled(true);

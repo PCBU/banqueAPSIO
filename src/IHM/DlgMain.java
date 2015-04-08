@@ -32,12 +32,12 @@ public class DlgMain extends JFrame {
     DlgMain dlgMain;
 
     public DlgMain() {
-        //Création des controles
+        //CrÃ©ation des controles
         bCompte = new JButton("Comptes");
         bClient = new JButton("Clients");
         bAdmin = new JButton("Passer en mode Administrateur");
         bAgios = new JButton("Calculer les Agios");
-        bInteret = new JButton("Calculer les Intérêts");
+        bInteret = new JButton("Calculer les IntÃ©rÃªts");
         bQuitter = new JButton("Quitter l'application");
 
         //evenements sur controles
@@ -61,10 +61,10 @@ public class DlgMain extends JFrame {
         getContentPane().add(bInteret);
         getContentPane().add(bQuitter);
 
-        setTitle("Gestion des comptes - Employé");
+        setTitle("Gestion des comptes - EmployÃ©");
 
         pack();
-        show();
+        setVisible(true);
 
         //initialisations
         listeClient = new ListeClient();
@@ -78,10 +78,10 @@ public class DlgMain extends JFrame {
 
         bAdministrateur = false;
 
-        listeCompte.addMouvement(0, 100, "Création par défaut", true);
-        listeCompte.addMouvement(0, -20, "Création par défaut", true);
-        listeCompte.addMouvement(1, 10000, "Création par défaut", true);
-        listeCompte.addMouvement(2, 100, "Création par défaut", true);
+        listeCompte.addMouvement(0, 100, "CrÃ©ation par dÃ©faut", true);
+        listeCompte.addMouvement(0, -20, "CrÃ©ation par dÃ©faut", true);
+        listeCompte.addMouvement(1, 10000, "CrÃ©ation par dÃ©faut", true);
+        listeCompte.addMouvement(2, 100, "CrÃ©ation par dÃ©faut", true);
 
         dlgMain = this;
 
@@ -98,12 +98,12 @@ public class DlgMain extends JFrame {
             } else if (e.getSource() == bAdmin) {
                 if (!bAdministrateur) {
                     bAdministrateur = true;
-                    bAdmin.setText("Passer en mode Employé");
+                    bAdmin.setText("Passer en mode EmployÃ©");
                     setTitle("Gestion des comptes - Administrateur");
                 } else {
                     bAdministrateur = false;
                     bAdmin.setText("Passer en mode Administrateur");
-                    setTitle("Gestion des comptes - Employé");
+                    setTitle("Gestion des comptes - EmployÃ©");
                 }
             } else if (e.getSource() == bAgios) {
                 for (int i = 0; i < listeCompte.size(); i++) {

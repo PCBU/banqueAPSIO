@@ -3,13 +3,10 @@
 package Application;
 
 import Metier.Comptes;
-import Metier.CompteEpargne;
-import Metier.CompteDepot;
-import Metier.Clients;
 
-import java.util.Vector;
-import java.awt.*;
 import javax.swing.*;
+import java.awt.*;
+import java.util.Vector;
 
 public class DetailCompte {
     public Vector theComptes;
@@ -20,7 +17,7 @@ public class DetailCompte {
      */
     public DetailCompte(ListeCompte listeCompte) {
         String sMvt[][] = new String[100][100];
-        String nomColonnes[] = {"Compte", "Solde", "Date mouvement", "Mouvement", "Crédit", "Débit", "Description"};
+        String nomColonnes[] = {"Compte", "Solde", "Date mouvement", "Mouvement", "CrÃ©dit", "DÃ©bit", "Description"};
         int k = 0;
 
         for (int i = 0; i < listeCompte.size(); i++) {
@@ -28,7 +25,7 @@ public class DetailCompte {
             Comptes c = (Comptes) listeCompte.theComptes.elementAt(i);
             sMvt[k][1] = Double.toString(c.getSolde());
 
-            String[][] sMouvement = new String[100][100];
+            String[][] sMouvement;
             sMouvement = c.getMouvements();
 
             k++;

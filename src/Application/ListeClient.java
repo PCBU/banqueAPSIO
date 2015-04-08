@@ -17,8 +17,8 @@ public class ListeClient {
         theClients = new Vector();
 
         //Initialisation du tableau client
-        add("Nom1 par défaut", "Adr1 par défaut", 1);
-        add("Nom2 par défaut", "Adr2 par défaut", 2);
+        add("Nom1 par dÃ©faut", "Adr1 par dÃ©faut", 1);
+        add("Nom2 par dÃ©faut", "Adr2 par dÃ©faut", 2);
 
     }
 

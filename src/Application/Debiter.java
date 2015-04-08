@@ -20,7 +20,7 @@ public class Debiter {
                 String sClassName = (theComptes.getClass()).getName();
                 if (sClassName.equals("Metier.CompteDepot")) {
                     CompteDepot CD = (CompteDepot) theComptes;
-                    CD.debiterExceptionnel(montant, description + " (Débit exceptionnel)");
+                    CD.debiterExceptionnel(montant, description + " (DÃ©bit exceptionnel)");
                 }
             }
             else{
