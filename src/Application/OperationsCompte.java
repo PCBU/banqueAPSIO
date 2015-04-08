@@ -12,6 +12,7 @@ import java.util.Vector;
 public class OperationsCompte {
     public Vector theComptes;
     public JTable table;
+    public String[][] tab;
 
     /**
      * @roseuid 3D24647900AA
@@ -51,6 +52,7 @@ public class OperationsCompte {
         k++;
 
         table = new JTable(sMvt, nomColonnes);
+        tab = sMvt;
         table.setPreferredScrollableViewportSize(new Dimension(750, 400));
     }
 
@@ -58,4 +60,27 @@ public class OperationsCompte {
         return table;
     }
 
+    public String getReleve() {
+        StringBuilder sb = new StringBuilder();
+
+        String nomColonnes[] = {"Compte", "Solde", "Date mouvement\t", "Mouvement", "Crédit\t", "Débit\t", "Description"};
+
+        for (String col : nomColonnes) {
+            sb.append(col + "\t");
+        }
+        sb.append("\n");
+
+        for (int i = 0; i < tab.length; i++) {
+            for (int j = 0; j < tab[i].length; j++) {
+                if (tab[i][j] == null) {
+                    sb.append("\t\t");
+                } else {
+                    sb.append(tab[i][j] + "\t\t");
+                }
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
 }

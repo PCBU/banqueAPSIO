@@ -2,12 +2,16 @@
 
 package IHM;
 
+import Application.OperationsCompte;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class DlgListeCompte extends JFrame {
     DlgMain dlgMain;
@@ -27,6 +31,7 @@ public class DlgListeCompte extends JFrame {
     JButton bFermer;
     JButton bTransferer;
     JButton bDebitExceptionnel;
+    JButton bReleve;
     List listCompte;
     int iCodeClient;
 
@@ -59,6 +64,8 @@ public class DlgListeCompte extends JFrame {
         if (dlgMain.bAdministrateur) {
             pBouton.add(bDebitExceptionnel);
         }
+        bReleve = new JButton("Générer relevé");
+        pBouton.add(bReleve);
 
         unAdaptateurBoutons = new AdaptateurBoutons();
         bCrediter.addActionListener(unAdaptateurBoutons);
@@ -69,6 +76,7 @@ public class DlgListeCompte extends JFrame {
         bSupprimer.addActionListener(unAdaptateurBoutons);
         bTransferer.addActionListener(unAdaptateurBoutons);
         bDebitExceptionnel.addActionListener(unAdaptateurBoutons);
+        bReleve.addActionListener(unAdaptateurBoutons);
         addWindowListener(new AdapFenetre());
 
         getContentPane().add("Center", listCompte);
@@ -131,6 +139,14 @@ public class DlgListeCompte extends JFrame {
                 dlgMain.listeClient.removeCompteFromClient(Integer.parseInt(listCompte.getSelectedItem()));
             } else if (e.getSource() == bOperations) {
                 theDlgOperations = new DlgOperationsCompte(dlgMain, listCompte.getSelectedIndex());
+            } else if (e.getSource() == bReleve) {
+                try {
+                    FileWriter fw = new FileWriter("releve.txt");
+                    fw.write(new OperationsCompte(dlgMain.listeCompte, listCompte.getSelectedIndex()).getReleve());
+                    fw.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         }
     }
