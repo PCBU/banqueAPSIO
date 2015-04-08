@@ -79,6 +79,9 @@ public class Comptes {
         compteCible.credit = compteCible.credit + montant;
 
     }
+    public double getAutorisationDecouvert(){
+        return 0.0;
+    }
 
     /**
      * @return Void
