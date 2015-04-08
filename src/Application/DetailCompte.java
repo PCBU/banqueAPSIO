@@ -2,6 +2,7 @@
 
 package Application;
 
+import Metier.CompteDepot;
 import Metier.Comptes;
 
 import javax.swing.*;
