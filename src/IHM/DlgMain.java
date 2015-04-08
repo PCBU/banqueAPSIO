@@ -10,6 +10,7 @@ import Application.*;
 public class DlgMain extends JFrame {
     public DlgListeCompte theDlgListeCompte;
     public DlgListeClient theDlgListeClient;
+    public DlgDetailCompte theDlgDetailCompte;
     public DlgCreateClient theDlgCreateClient;
     public CalculAgios theCalculAgios;
     public CalculInteret theCalculInteret;
@@ -21,8 +22,17 @@ public class DlgMain extends JFrame {
     JButton bAdmin;
     JButton bInteret;
     JButton bAgios;
+    JButton bTousComptes;
+    JButton bDebitExceptionnel;
     JButton bQuitter;
+
     AdaptateurBoutons unAdaptateurBoutons;
+
+    JFrame passwordQuerying;
+    JTextField username;
+    JTextField password;
+    JButton bValidate;
+
 
     Vector vCompte = new Vector();
     ListeClient listeClient;
@@ -38,7 +48,10 @@ public class DlgMain extends JFrame {
         bAdmin = new JButton("Passer en mode Administrateur");
         bAgios = new JButton("Calculer les Agios");
         bInteret = new JButton("Calculer les Intérêts");
+        bTousComptes = new JButton("Opérations de tous les comptes");
+        bDebitExceptionnel = new JButton("Débit exceptionnel");
         bQuitter = new JButton("Quitter l'application");
+
 
         //evenements sur controles
         unAdaptateurBoutons = new AdaptateurBoutons();
@@ -47,9 +60,11 @@ public class DlgMain extends JFrame {
         bAdmin.addActionListener(unAdaptateurBoutons);
         bAgios.addActionListener(unAdaptateurBoutons);
         bInteret.addActionListener(unAdaptateurBoutons);
+        bTousComptes.addActionListener(unAdaptateurBoutons);
+        bDebitExceptionnel.addActionListener(unAdaptateurBoutons);
         bQuitter.addActionListener(unAdaptateurBoutons);
 
-        addWindowListener((WindowListener) new AdapFenetre());
+        addWindowListener(new AdapFenetre());
 
 
         //ajout des controles
@@ -57,8 +72,6 @@ public class DlgMain extends JFrame {
         getContentPane().add(bCompte);
         getContentPane().add(bAdmin);
         getContentPane().add(bClient);
-        getContentPane().add(bAgios);
-        getContentPane().add(bInteret);
         getContentPane().add(bQuitter);
 
         setTitle("Gestion des comptes - Employé");
@@ -97,10 +110,26 @@ public class DlgMain extends JFrame {
                 System.exit(0);
             } else if (e.getSource() == bAdmin) {
                 if (!bAdministrateur) {
-                    bAdministrateur = true;
-                    bAdmin.setText("Passer en mode Employé");
-                    setTitle("Gestion des comptes - Administrateur");
+
+                    passwordQuerying = new JFrame();
+                    username = new JTextField("Username", 20);
+                    password = new JTextField("Password", 20);
+                    bValidate = new JButton("OK");
+
+                    passwordQuerying.getContentPane().setLayout(new GridLayout(2, 2));
+                    passwordQuerying.getContentPane().add(username);
+                    passwordQuerying.getContentPane().add(password);
+                    bValidate.addActionListener(unAdaptateurBoutons);
+                    passwordQuerying.getContentPane().add(bValidate);
+                    setFocusable(false);
+                    passwordQuerying.setVisible(true);
                 } else {
+                    getContentPane().remove(bAgios);
+                    getContentPane().remove(bInteret);
+                    getContentPane().remove(bTousComptes);
+                    getContentPane().remove(bDebitExceptionnel);
+                    getContentPane().setLayout(new GridLayout(2, 3));
+
                     bAdministrateur = false;
                     bAdmin.setText("Passer en mode Administrateur");
                     setTitle("Gestion des comptes - Employé");
@@ -109,25 +138,44 @@ public class DlgMain extends JFrame {
                 for (int i = 0; i < listeCompte.size(); i++) {
                     String sClassName = (listeCompte.getCompte(listeCompte.getCodeCompte(i)).getClass()).getName();
                     if (sClassName.equals("Metier.CompteDepot")) {
-                        new CalculAgios(listeCompte, listeCompte.getCodeCompte(i));
+                        theCalculAgios = new CalculAgios(listeCompte, listeCompte.getCodeCompte(i));
                     }
                 }
             } else if (e.getSource() == bInteret) {
                 for (int i = 0; i < listeCompte.size(); i++) {
                     String sClassName = (listeCompte.getCompte(listeCompte.getCodeCompte(i)).getClass()).getName();
                     if (sClassName.equals("Metier.CompteEpargne")) {
-                        new CalculInteret(listeCompte, listeCompte.getCodeCompte(i));
+                        theCalculInteret = new CalculInteret(listeCompte, listeCompte.getCodeCompte(i));
                     }
                 }
+            } else if (e.getSource() == bTousComptes) {
+                theDlgDetailCompte = new DlgDetailCompte(dlgMain);
+            } else if (e.getSource() == bValidate) {
+                if (username.getText().equals("admin") && password.getText().equals("password")) {
+                    getContentPane().add(bAgios);
+                    getContentPane().add(bInteret);
+                    getContentPane().add(bTousComptes);
+                    getContentPane().add(bDebitExceptionnel);
+                    getContentPane().setLayout(new GridLayout(3, 3));
+
+                    bAdministrateur = true;
+                    bAdmin.setText("Passer en mode Employé");
+                    setTitle("Gestion des comptes - Administrateur");
+                } else {
+                    JFrame alert = new JFrame("Error");
+                    alert.add(new JLabel("Identifiants incorrects"));
+                    alert.setVisible(true);
+                }
+
+                passwordQuerying.setVisible(false);
+                setFocusable(true);
             }
         }
-    }//fin de AdaptateurBoutons
+    }
 
     class AdapFenetre extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
             System.exit(0);
         }
     }
-
-
-}//fin du main
+}

@@ -12,7 +12,6 @@ import java.awt.event.WindowEvent;
 public class DlgListeCompte extends JFrame {
     DlgMain dlgMain;
 
-    public DlgDetailCompte theDlgDetailCompte;
     public DlgCrediter theDlgCrediter;
     public DlgCreateCompte theDlgCreateCompte;
     public DlgDebiter theDlgDebiter;
@@ -23,7 +22,6 @@ public class DlgListeCompte extends JFrame {
     JButton bCrediter;
     JButton bDebiter;
     JButton bNouveau;
-    JButton bDetails;
     JButton bOperations;
     JButton bSupprimer;
     JButton bFermer;
@@ -50,8 +48,6 @@ public class DlgListeCompte extends JFrame {
         pBouton.add(bTransferer);
         bNouveau = new JButton("Nouveau compte");
         pBouton.add(bNouveau);
-        bDetails = new JButton("Détails des comptes");
-        //pBouton.add(bDetails);
         bOperations = new JButton("Détails du compte");
         pBouton.add(bOperations);
         bSupprimer = new JButton("Fermer compte");
@@ -63,7 +59,6 @@ public class DlgListeCompte extends JFrame {
         bCrediter.addActionListener(unAdaptateurBoutons);
         bDebiter.addActionListener(unAdaptateurBoutons);
         bNouveau.addActionListener(unAdaptateurBoutons);
-        bDetails.addActionListener(unAdaptateurBoutons);
         bOperations.addActionListener(unAdaptateurBoutons);
         bFermer.addActionListener(unAdaptateurBoutons);
         bSupprimer.addActionListener(unAdaptateurBoutons);
@@ -108,9 +103,7 @@ public class DlgListeCompte extends JFrame {
     class AdaptateurBoutons implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
-            if (e.getSource() == bDetails) {
-                theDlgDetailCompte = new DlgDetailCompte(dlgMain);
-            } else if (e.getSource() == bNouveau) {
+            if (e.getSource() == bNouveau) {
                 int iNextCode = dlgMain.listeCompte.size();
                 if (iNextCode != 0) {
                     iNextCode = dlgMain.listeCompte.getCodeCompte(dlgMain.listeCompte.size() - 1) + 1;
@@ -133,13 +126,13 @@ public class DlgListeCompte extends JFrame {
                 theDlgOperations = new DlgOperationsCompte(dlgMain, listCompte.getSelectedIndex());
             }
         }
-    }//fin de AdaptateurBoutons
+    }
 
     class AdapFenetreCreate extends WindowAdapter {
         public void windowDeactivated(WindowEvent e) {
             ReloadListe();
         }
-    }//fin de AdapFenetreCreate
+    }
 
 
     class AdapFenetre extends WindowAdapter {
