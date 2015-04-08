@@ -32,7 +32,7 @@ public class DlgCreateCompte extends JFrame {
         FlowLayout flNumCpt = new FlowLayout();
         pNumCpt.setLayout(flNumCpt);
         iNumCpt = iCodeCpt;
-        Label lNum = new Label("Numéro de compte :");
+        Label lNum = new Label("NumÃ©ro de compte :");
         Label lNumCpt = new Label(Integer.toString(iNumCpt));
         pNumCpt.add(lNum);
         pNumCpt.add(lNumCpt);
@@ -42,7 +42,7 @@ public class DlgCreateCompte extends JFrame {
         Panel pClient = new Panel();
         FlowLayout flClient = new FlowLayout();
         pClient.setLayout(flClient);
-        Label lCli = new Label("Numéro de client :");
+        Label lCli = new Label("NumÃ©ro de client :");
         pClient.add(lCli);
         pClient.add(cbClient);
 
@@ -50,7 +50,7 @@ public class DlgCreateCompte extends JFrame {
         FlowLayout flCptED = new FlowLayout();
         pCptED.setLayout(flCptED);
         Label lTypeCpt = new Label("Type de compte :");
-        rbCptDep = new JRadioButton("Compte Dépôt", true);
+        rbCptDep = new JRadioButton("Compte DÃ©pÃ´t", true);
         rbCptEp = new JRadioButton("Compte Epargne");
         pCptED.add(lTypeCpt);
         pCptED.add(rbCptDep);
@@ -64,7 +64,7 @@ public class DlgCreateCompte extends JFrame {
 
         FlowLayout flDecouvert = new FlowLayout();
         pDecouvert.setLayout(flDecouvert);
-        Label lDecouvert = new Label("Découvert Autorisé :");
+        Label lDecouvert = new Label("DÃ©couvert AutorisÃ© :");
         tfDecouvert = new TextField("0", 20);
         pDecouvert.add(lDecouvert);
         pDecouvert.add(tfDecouvert);
@@ -72,7 +72,7 @@ public class DlgCreateCompte extends JFrame {
         Panel pDepot = new Panel();
         FlowLayout flDepot = new FlowLayout();
         pDepot.setLayout(flDepot);
-        Label lDepot = new Label("Dépôt initial :");
+        Label lDepot = new Label("DÃ©pÃ´t initial :");
         tfDepot = new TextField("", 20);
         pDepot.add(lDepot);
         pDepot.add(tfDepot);
@@ -80,7 +80,7 @@ public class DlgCreateCompte extends JFrame {
         Panel pBouton = new Panel();
         FlowLayout flBouton = new FlowLayout();
         pBouton.setLayout(flBouton);
-        bValider = new JButton("Créer compte");
+        bValider = new JButton("CrÃ©er compte");
         bAnnuler = new JButton("Annuler");
         pBouton.add(bValider);
         pBouton.add(bAnnuler);
@@ -93,14 +93,14 @@ public class DlgCreateCompte extends JFrame {
         getContentPane().add(pDepot);
         getContentPane().add(pBouton);
 
-        //préselection du client
+        //prÃ©selection du client
         if (iCodeClient != -1) {
             for (int i = 0; i < cbClient.getItemCount(); i++) {
                 if (Integer.parseInt(cbClient.getItem(i)) == iCodeClient) {
                     cbClient.select(i);
                 }
             }
-        } else {    //selection par défaut
+        } else {    //selection par dÃ©faut
             if (cbClient.getItemCount() > 0) {
                 cbClient.select(0);
             } else //blocage de la fenetre
@@ -116,7 +116,7 @@ public class DlgCreateCompte extends JFrame {
         rbCptDep.addActionListener(unAdaptateurBoutons);
         addWindowListener((WindowListener) new AdapFenetre());
 
-        setTitle("Créer un compte");
+        setTitle("CrÃ©er un compte");
 
         pack();
         show();
