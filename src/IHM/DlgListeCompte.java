@@ -26,6 +26,7 @@ public class DlgListeCompte extends JFrame {
     JButton bSupprimer;
     JButton bFermer;
     JButton bTransferer;
+    JButton bDebitExceptionnel;
     List listCompte;
     int iCodeClient;
 
@@ -54,6 +55,10 @@ public class DlgListeCompte extends JFrame {
         pBouton.add(bSupprimer);
         bFermer = new JButton("Fermer");
         pBouton.add(bFermer);
+        if (dlgMain.bAdministrateur) {
+            bDebitExceptionnel = new JButton("Débit exceptionnel");
+            pBouton.add(bDebitExceptionnel);
+        }
 
         unAdaptateurBoutons = new AdaptateurBoutons();
         bCrediter.addActionListener(unAdaptateurBoutons);
@@ -63,6 +68,7 @@ public class DlgListeCompte extends JFrame {
         bFermer.addActionListener(unAdaptateurBoutons);
         bSupprimer.addActionListener(unAdaptateurBoutons);
         bTransferer.addActionListener(unAdaptateurBoutons);
+        bDebitExceptionnel.addActionListener(unAdaptateurBoutons);
         addWindowListener(new AdapFenetre());
 
         getContentPane().add("Center", listCompte);

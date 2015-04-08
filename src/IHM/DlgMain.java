@@ -23,8 +23,8 @@ public class DlgMain extends JFrame {
     JButton bInteret;
     JButton bAgios;
     JButton bTousComptes;
-    JButton bDebitExceptionnel;
     JButton bQuitter;
+    //wtf
 
     AdaptateurBoutons unAdaptateurBoutons;
 
@@ -49,7 +49,6 @@ public class DlgMain extends JFrame {
         bAgios = new JButton("Calculer les Agios");
         bInteret = new JButton("Calculer les Intérêts");
         bTousComptes = new JButton("Opérations de tous les comptes");
-        bDebitExceptionnel = new JButton("Débit exceptionnel");
         bQuitter = new JButton("Quitter l'application");
 
 
@@ -61,7 +60,6 @@ public class DlgMain extends JFrame {
         bAgios.addActionListener(unAdaptateurBoutons);
         bInteret.addActionListener(unAdaptateurBoutons);
         bTousComptes.addActionListener(unAdaptateurBoutons);
-        bDebitExceptionnel.addActionListener(unAdaptateurBoutons);
         bQuitter.addActionListener(unAdaptateurBoutons);
 
         addWindowListener(new AdapFenetre());
@@ -127,7 +125,6 @@ public class DlgMain extends JFrame {
                     getContentPane().remove(bAgios);
                     getContentPane().remove(bInteret);
                     getContentPane().remove(bTousComptes);
-                    getContentPane().remove(bDebitExceptionnel);
                     getContentPane().setLayout(new GridLayout(2, 3));
 
                     bAdministrateur = false;
@@ -155,7 +152,6 @@ public class DlgMain extends JFrame {
                     getContentPane().add(bAgios);
                     getContentPane().add(bInteret);
                     getContentPane().add(bTousComptes);
-                    getContentPane().add(bDebitExceptionnel);
                     getContentPane().setLayout(new GridLayout(3, 3));
 
                     bAdministrateur = true;
