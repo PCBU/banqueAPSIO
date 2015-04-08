@@ -2,6 +2,7 @@
 
 package Metier;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Mouvements {
@@ -30,7 +31,7 @@ public class Mouvements {
     }
 
     public String getDate() {
-        return dateCreation.toString();
+        return new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.S").format(dateCreation);
     }
 
     public String getCodeMvt() {
