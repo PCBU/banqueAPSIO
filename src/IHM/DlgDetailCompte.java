@@ -27,7 +27,7 @@ public class DlgDetailCompte extends JFrame {
         getContentPane().add("Center", scrollpane);
         getContentPane().add("South", bFermer);
 
-        addWindowListener((WindowListener) new AdapFenetre());
+        addWindowListener(new AdapFenetre());
         unAdaptateurBoutons = new AdaptateurBoutons();
         bFermer.addActionListener(unAdaptateurBoutons);
 
