@@ -41,4 +41,8 @@ public class CompteDepot extends Comptes {
         debiter(montant, description);
         return true;
     }
+
+    public double getDecouvertAutorise(){
+        return this.decouvertAutorise;
+    }
 }

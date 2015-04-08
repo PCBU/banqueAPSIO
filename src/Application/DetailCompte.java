@@ -2,6 +2,7 @@
 
 package Application;
 
+import Metier.CompteDepot;
 import Metier.Comptes;
 
 import javax.swing.*;
@@ -17,7 +18,7 @@ public class DetailCompte {
      */
     public DetailCompte(ListeCompte listeCompte) {
         String sMvt[][] = new String[100][100];
-        String nomColonnes[] = {"Compte", "Solde", "Date mouvement", "Mouvement", "Crédit", "Débit", "Description"};
+        String nomColonnes[] = {"Comptes", "Solde", "Date mouvement", "Mouvement", "Crédit", "Débit", "Description"};
         int k = 0;
 
         for (int i = 0; i < listeCompte.size(); i++) {

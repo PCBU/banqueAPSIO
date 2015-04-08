@@ -2,6 +2,7 @@
 
 package Application;
 
+import Metier.CompteDepot;
 import Metier.Comptes;
 
 import javax.swing.*;
@@ -17,12 +18,23 @@ public class OperationsCompte {
      */
     public OperationsCompte(ListeCompte listeCompte, int codeCpt) {
         String sMvt[][] = new String[100][100];
-        String nomColonnes[] = {"Compte", "Solde", "Date mouvement", "Mouvement", "Crédit", "Débit", "Description"};
         int k = 0;
+        String nomColonnes[];
+        Comptes c = (Comptes) listeCompte.theComptes.elementAt(codeCpt);
+        if (c instanceof CompteDepot){
+            CompteDepot c1 = (CompteDepot) c;
+            nomColonnes = new String[] {"Compte", "Solde", "Découvert autorisé", "Date mouvement", "Mouvement", "Crédit", "Débit", "Description"};
+            sMvt[k][2] = Double.toString(c1.getDecouvertAutorise());
+        }
+        else {
+            nomColonnes = new String[] {"Compte", "Solde", "Date mouvement", "Mouvement", "Crédit", "Débit", "Description"};;
+        }
+
+
 
         sMvt[k][0] = Integer.toString(listeCompte.getCodeCompte(codeCpt));
-        Comptes c = (Comptes) listeCompte.theComptes.elementAt(codeCpt);
         sMvt[k][1] = Double.toString(c.getSolde());
+
 
         String[][] sMouvement;
         sMouvement = c.getMouvements();
