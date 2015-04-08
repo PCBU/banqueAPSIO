@@ -117,7 +117,7 @@ public class DlgListeCompte extends JFrame {
                 }
                 theDlgCreateCompte = new DlgCreateCompte(dlgMain, -1, iNextCode);
                 theDlgCreateCompte.addWindowListener(new AdapFenetreCreate());
-            } else if (e.getSource() == bDebiter) {
+            } else if (e.getSource() == bDebiter || e.getSource() == bDebitExceptionnel) {
                 theDlgDebiter = new DlgDebiter(dlgMain, listCompte.getSelectedIndex());
             } else if (e.getSource() == bTransferer) {
                 theDlgTransferer = new DlgTransferer(dlgMain, null);

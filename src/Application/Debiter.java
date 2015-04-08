@@ -4,6 +4,8 @@ package Application;
 
 import Metier.*;
 
+import javax.swing.*;
+
 public class Debiter {
     public Comptes theComptes;
 
@@ -12,7 +14,7 @@ public class Debiter {
      */
     public Debiter(ListeCompte listeCpt, int CodeCpt, double montant, String description, boolean bAdmin) {
         theComptes = listeCpt.getCompte(CodeCpt);
-        if (theComptes.getSolde() - montant > 0) {
+        if ((theComptes.getSolde() + theComptes.getAutorisationDecouvert()) - montant > 0) {
             theComptes.debiter(montant, description);
         } else {
             if (bAdmin) {
@@ -21,6 +23,8 @@ public class Debiter {
                     CompteDepot CD = (CompteDepot) theComptes;
                     CD.debiterExceptionnel(montant, description + " (Débit exceptionnel)");
                 }
+            }else{
+                JOptionPane.showMessageDialog(new JFrame(), "Solde inssufisante","Erreur",JOptionPane.WARNING_MESSAGE);
             }
         }
     }
