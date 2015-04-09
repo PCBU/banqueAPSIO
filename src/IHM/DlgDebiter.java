@@ -2,16 +2,18 @@
 
 package IHM;
 
+import Metier.CompteDepot;
+import Metier.CompteEpargne;
+import Metier.Comptes;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import Application.Debiter;
+import static java.lang.Double.parseDouble;
 
 public class DlgDebiter extends JFrame {
     DlgMain dlgMain;
-
-    public Debiter theDebiter;
 
     Choice cbCompte;
     JButton bDebiter;
@@ -19,10 +21,13 @@ public class DlgDebiter extends JFrame {
     TextField tfMontant;
     TextField tfDesc;
     int iCptSel;
+    boolean isExceptional;
     AdaptateurBoutons unAdaptateurBoutons;
 
-    public DlgDebiter(DlgMain dlg, int iIndex) {
+    public DlgDebiter(DlgMain dlg, int iIndex, boolean isExceptional) {
         dlgMain = dlg;
+
+        this.isExceptional = isExceptional;
 
         cbCompte = new Choice();
         ReloadListe();
@@ -71,7 +76,7 @@ public class DlgDebiter extends JFrame {
         bDebiter.addActionListener(unAdaptateurBoutons);
         bAnnuler.addActionListener(unAdaptateurBoutons);
 
-        addWindowListener((WindowListener) new AdapFenetre());
+        addWindowListener(new AdapFenetre());
 
         setTitle("Débiter un compte");
 
@@ -103,14 +108,20 @@ public class DlgDebiter extends JFrame {
     class AdaptateurBoutons implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == bDebiter) {
-                dlgMain.listeCompte.getCompte(iCptSel).debiter(Double.parseDouble(tfMontant.getText()), tfDesc.getText(), dlgMain.bAdministrateur);
-               // new Debiter(dlgMain.listeCompte, iCptSel, Double.parseDouble(tfMontant.getText()), tfDesc.getText(), dlgMain.bAdministrateur);
+                Comptes compte = dlgMain.listeCompte.getCompte(iCptSel);
+
+                if (dlgMain.listeCompte.getCompte(iCptSel).getClass().equals(CompteDepot.class)) {
+                    ((CompteDepot) compte).debiter(parseDouble(tfMontant.getText()), tfDesc.getText(), isExceptional);
+                } else {
+                    ((CompteEpargne) compte).debiter(parseDouble(tfMontant.getText()), tfDesc.getText(), isExceptional);
+                }
+
                 setVisible(false);
             } else if (e.getSource() == bAnnuler) {
                 setVisible(false);
             }
         }
-    }//fin de AdaptateurBoutons
+    }
 
     class AdapFenetre extends WindowAdapter {
         public void windowClosing(WindowEvent e) {

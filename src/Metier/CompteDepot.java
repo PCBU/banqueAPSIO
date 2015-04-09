@@ -20,6 +20,11 @@ public class CompteDepot extends Comptes {
         this.decouvertAutorise = decouvertAutorise;
     }
 
+    public CompteDepot(int iCodeCpt, double decouvertAutorise, boolean isExceptional) {
+        super(iCodeCpt);
+        this.decouvertAutorise = decouvertAutorise;
+    }
+
     /**
      * @return Double
      * @roseuid 3D24608203EF
@@ -35,14 +40,16 @@ public class CompteDepot extends Comptes {
     public double getAutorisationDecouvert(){
         return decouvertAutorise;
     }
-    /**
-     * @param montant
-     * @param description
-     * @return Boolean
-     * @roseuid 3D24608203F0
-     */
-    public Boolean debiterExceptionnel(double montant, String description) {
-        debiter(montant, description);
-        return true;
+
+    public void debiter(double montant, String description, boolean isExceptional) {
+        if ((this.getSolde() - montant) >= -(this.getAutorisationDecouvert())) {
+            this.debiter(montant, description);
+        } else {
+            if (isExceptional) {
+                this.debiter(montant, description);
+            } else {
+                new DlgMessage("Debit impossible");
+            }
+        }
     }
 }

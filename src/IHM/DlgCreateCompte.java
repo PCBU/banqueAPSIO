@@ -148,6 +148,9 @@ public class DlgCreateCompte extends JFrame {
             if (e.getSource() == bValider) {
                 OuvrirCompte oc = new OuvrirCompte(dlgMain.listeClient, iNumCpt, Integer.parseInt(cbClient.getSelectedItem()), Double.parseDouble(tfDepot.getText()));
                 if (rbCptDep.isSelected()) {
+                    if (tfDecouvert.getText().equals("")) {
+                        dlgMain.listeCompte.addCompteDepot(oc.createCompteDepot());
+                    }
                     dlgMain.listeCompte.addCompteDepot(oc.createCompteDepot(Double.parseDouble(tfDecouvert.getText())));
                 } else {
                     dlgMain.listeCompte.addCompteEpargne(oc.createCompteEpargne());
@@ -157,7 +160,7 @@ public class DlgCreateCompte extends JFrame {
                 setVisible(false);
             }
         }
-    }//fin de AdaptateurBoutons
+    }
 
     class AdapFenetre extends WindowAdapter {
         public void windowClosing(WindowEvent e) {

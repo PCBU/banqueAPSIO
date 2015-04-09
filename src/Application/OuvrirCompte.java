@@ -35,7 +35,7 @@ public class OuvrirCompte {
     }
 
     public CompteDepot createCompteDepot() {
-        CompteDepot cd = new CompteDepot(iCodeCompte);
+        CompteDepot cd = new CompteDepot(iCodeCompte, 0);
         cd.crediter(dDepot, "Dépôt initial");
         return cd;
     }

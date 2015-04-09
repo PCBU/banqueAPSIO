@@ -1,5 +1,5 @@
 //Source file: c:\\Mes documents\\Lecomte - Barbieri\\Projet UML-Java\\Application\\Debiter.java
-
+/*
 package Application;
 
 import IHM.DlgMessage;
@@ -12,7 +12,7 @@ public class Debiter {
 
     /**
      * @roseuid 3D24616903A2
-     */
+     *//*
     public Debiter(ListeCompte listeCpt, int CodeCpt, double montant, String description, boolean bAdmin) {
         theComptes = listeCpt.getCompte(CodeCpt);
         if ((theComptes.getSolde() + theComptes.getAutorisationDecouvert()) - montant > 0) {
@@ -30,3 +30,4 @@ public class Debiter {
         }
     }
 }
+*/

@@ -29,14 +29,12 @@ public class Comptes {
      * @return Boolean
      * @roseuid 3D24608203D6
      */
-    public Boolean debiter(double montant, String description) {
+    public void debiter(double montant, String description) {
         debit = debit + montant;
 
         int iNbMvt = theMouvements.size();
         Mouvements mvt = new Mouvements(montant * -1, description, iNbMvt);
         theMouvements.add(mvt);
-
-        return true;
     }
 
     /**
@@ -110,10 +108,6 @@ public class Comptes {
             sMvt[i][6] = mvt.getDescription();
         }
         return sMvt;
-    }
-
-    public void debiter(double montant, String description, boolean bAdmin) {
-        // Code dans les classes filles
     }
 }
 
