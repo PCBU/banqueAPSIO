@@ -39,7 +39,7 @@ public class DlgListeCompte extends JFrame {
         dlgMain = dlg;
         iCodeClient = iCClient;
 
-        listCompte = new List(5, false);
+        listCompte = new List();
 
         ReloadListe();
 

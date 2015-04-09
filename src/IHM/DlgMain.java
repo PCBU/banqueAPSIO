@@ -3,9 +3,12 @@ package IHM;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.*;
 import java.util.Vector;
-
 import Application.*;
+import Metier.Clients;
+import Metier.Comptes;
+
 
 public class DlgMain extends JFrame {
     public DlgListeCompte theDlgListeCompte;
@@ -82,20 +85,66 @@ public class DlgMain extends JFrame {
         listeClient = new ListeClient();
         listeCompte = new ListeCompte();
 
-        listeClient.addCompteToClient(0, 1);
-        listeClient.addCompteToClient(2, 1);
-        listeClient.addCompteToClient(1, 2);
-        listeClient.addCompteToClient(3, 2);
-        listeClient.addCompteToClient(4, 2);
+
+        loadAccount();
+
+//
 
         bAdministrateur = false;
 
-        listeCompte.addMouvement(0, 100, "Création par défaut", true);
-        listeCompte.addMouvement(0, -20, "Création par défaut", true);
-        listeCompte.addMouvement(1, 10000, "Création par défaut", true);
-        listeCompte.addMouvement(2, 100, "Création par défaut", true);
+
 
         dlgMain = this;
+
+    }
+    public void loadAccount(){
+        Vector vc = new Vector();
+        Vector vc2 = new Vector();
+
+        FileReader reader;
+        BufferedReader buffreader;
+        String s;
+        String texte;
+        String[] result;
+        try {
+            reader = new FileReader("client.txt");
+            buffreader = new BufferedReader(reader);
+            while ((s = buffreader.readLine()) != null) {
+                vc.add(s);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for(int i = 0; i < vc.size() ; i++){
+            texte = (String)vc.elementAt(i);
+            result = texte.split(";");
+            listeClient.add(result[1],result[2],Integer.valueOf(result[0]));
+            for(int j = 3; j < result.length;j++){
+                listeClient.addCompteToClient(Integer.parseInt(result[j]) , Integer.valueOf(result[0]) );
+                listeCompte.addCompte(Integer.parseInt(result[j]) );
+            }
+        }
+        try {
+            reader = new FileReader("compte.txt");
+            buffreader = new BufferedReader(reader);
+            while ((s = buffreader.readLine()) != null) {
+                vc2.add(s);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for(int i = 0; i < vc2.size() ; i++){
+            texte = (String)vc2.elementAt(i);
+            result = texte.split(";");
+            listeCompte.addMouvement(Integer.valueOf(result[0]), Double.valueOf(result[4]), result[6], true);
+        }
+
 
     }
 
@@ -170,8 +219,61 @@ public class DlgMain extends JFrame {
         }
     }
 
+
     class AdapFenetre extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
+
+                try {
+                    FileWriter fw = new FileWriter("compte.txt");
+                    BufferedWriter bw = new BufferedWriter(fw);
+
+                        String sMvt[][] = new String[100][100];
+                        String[][] sMouvement;
+
+                        for (int i = 0; i < listeCompte.size(); i++) {
+
+
+                            Comptes c = (Comptes) listeCompte.theComptes.elementAt(i);
+                            sMouvement = c.getMouvements();
+                            for (int j = 0; j < c.theMouvements.size(); j++) {
+                                if(sMouvement != null){
+                                        bw.write( Integer.toString(listeCompte.getCodeCompte(i)) + ";");
+                                        bw.write(sMouvement[j][1] + ";");
+                                        bw.write(sMouvement[j][2] + ";");
+                                        bw.write(sMouvement[j][3] + ";");
+                                        bw.write(sMouvement[j][4] + ";");
+                                        bw.write(sMouvement[j][5] + ";");
+                                        bw.write(sMouvement[j][6] + ";");
+                                        bw.write("\n");
+                                }
+                            }
+                        }
+
+                    bw.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            try {
+                FileWriter fw = new FileWriter("client.txt");
+                BufferedWriter bw = new BufferedWriter(fw);
+                Clients client;
+                for (int i = 0; i < listeClient.size();i++){
+                    client =  (Clients)listeClient.theClients.elementAt(i);
+                    bw.write(client.getCodeClient() + ";");
+                    bw.write(client.getNom() + ";");
+                    bw.write(client.getAdresse() + ";");
+
+                        for (int j = 0; j < dlgMain.listeClient.nbCptForClient(client.getCodeClient()); j++) {
+                            bw.write(Integer.toString(listeClient.cptClient(client.getCodeClient(),j)) + ";" );
+                        }
+
+                    bw.write("\n");
+                }
+                bw.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
             System.exit(0);
         }
     }
