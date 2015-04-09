@@ -103,7 +103,8 @@ public class DlgDebiter extends JFrame {
     class AdaptateurBoutons implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == bDebiter) {
-                new Debiter(dlgMain.listeCompte, iCptSel, Double.parseDouble(tfMontant.getText()), tfDesc.getText(), dlgMain.bAdministrateur);
+                dlgMain.listeCompte.getCompte(iCptSel).debiter(Double.parseDouble(tfMontant.getText()), tfDesc.getText(), dlgMain.bAdministrateur);
+               // new Debiter(dlgMain.listeCompte, iCptSel, Double.parseDouble(tfMontant.getText()), tfDesc.getText(), dlgMain.bAdministrateur);
                 setVisible(false);
             } else if (e.getSource() == bAnnuler) {
                 setVisible(false);

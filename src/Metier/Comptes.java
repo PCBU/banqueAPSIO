@@ -2,6 +2,9 @@
 
 package Metier;
 
+import Application.ListeCompte;
+import IHM.DlgMessage;
+
 import java.util.*;
 
 public class Comptes {
@@ -108,4 +111,10 @@ public class Comptes {
         }
         return sMvt;
     }
+
+    public void debiter(double montant, String description, boolean bAdmin) {
+        // Code dans les classes filles
+    }
 }
+
+

@@ -2,6 +2,7 @@
 
 package Application;
 
+import IHM.DlgMessage;
 import Metier.*;
 
 import javax.swing.*;
@@ -25,6 +26,9 @@ public class Debiter {
                 }
             }else{
                 JOptionPane.showMessageDialog(new JFrame(), "Solde inssufisante","Erreur",JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                new DlgMessage("Debit impossible");
             }
         }
     }

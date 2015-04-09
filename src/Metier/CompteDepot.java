@@ -3,6 +3,8 @@
 package Metier;
 
 
+import IHM.DlgMessage;
+
 public class CompteDepot extends Comptes {
     private double tauxAgios = 0.2;
     private double decouvertAutorise =0 ;
@@ -42,9 +44,5 @@ public class CompteDepot extends Comptes {
     public Boolean debiterExceptionnel(double montant, String description) {
         debiter(montant, description);
         return true;
-    }
-
-    public double getDecouvertAutorise(){
-        return this.decouvertAutorise;
     }
 }

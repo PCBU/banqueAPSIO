@@ -19,8 +19,8 @@ public class DlgMessage extends JFrame{
 
         //Panel pMessage = new Panel();
         //FlowLayout flCompte = new FlowLayout();
-        // pMessage.setLayout(flCompte);
-        // pMessage.add(new Label("Message :"));
+       // pMessage.setLayout(flCompte);
+       // pMessage.add(new Label("Message :"));
 
         Panel pBouton = new Panel();
         FlowLayout flBouton = new FlowLayout();

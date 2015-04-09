@@ -2,9 +2,11 @@
 
 package Application;
 
+import IHM.DlgMessage;
+import Metier.Comptes;
+import Metier.CompteEpargne;
 import Metier.CompteDepot;
 import Metier.CompteEpargne;
-import Metier.Comptes;
 
 import java.util.Vector;
 
@@ -78,7 +80,7 @@ public class ListeCompte {
             }
         }
         if (c == null) {
-            System.out.println("Erreur de rÃ©cupÃ©ration du compte : " + iCode);
+            System.out.println("Erreur de récupération du compte : " + iCode);
         }
         return c;
     }
@@ -86,7 +88,12 @@ public class ListeCompte {
     public boolean supprimerComptes(int iCode) {
         for (int i = 0; i < size(); i++) {
             if (getCodeCompte(i) == iCode) {
-                theComptes.remove(i);
+                if(getCompte(i).getSolde() == 0) {
+                    theComptes.remove(i);
+                }
+                else{
+                    new DlgMessage("Le compte n'est pas vide");
+                }
             }
         }
         return true;
@@ -117,11 +124,12 @@ public class ListeCompte {
                 if (dMontant < 0) {
                     if (c.getSolde() + dMontant < 0) {
                         if (bAdmin) {
-                            c.debiter(dMontant * -1, sDesc + " (DÃ©bit exceptionnel)");
+                            c.debiter(dMontant * -1, sDesc + " (Débit exceptionnel)");
                         } else {
                             bOK = false;
                         }
                     } else {
+
                         c.debiter(dMontant * -1, sDesc);
                     }
                 } else {
