@@ -25,7 +25,7 @@ public class OperationsCompte {
         if (c instanceof CompteDepot){
             CompteDepot c1 = (CompteDepot) c;
             nomColonnes = new String[] {"Compte", "Solde", "Découvert autorisé", "Date mouvement", "Mouvement", "Crédit", "Débit", "Description"};
-            sMvt[k][2] = Double.toString(c1.getDecouvertAutorise());
+            sMvt[k][2] = Double.toString(c1.getAutorisationDecouvert());
         }
         else {
             nomColonnes = new String[] {"Compte", "Solde", "Date mouvement", "Mouvement", "Crédit", "Débit", "Description"};;

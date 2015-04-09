@@ -23,12 +23,9 @@ public class Debiter {
                 if (sClassName.equals("Metier.CompteDepot")) {
                     CompteDepot CD = (CompteDepot) theComptes;
                     CD.debiterExceptionnel(montant, description + " (Débit exceptionnel)");
+                } else {
+                    new DlgMessage("Debit impossible");
                 }
-            }else{
-                JOptionPane.showMessageDialog(new JFrame(), "Solde inssufisante","Erreur",JOptionPane.WARNING_MESSAGE);
-            }
-            else{
-                new DlgMessage("Debit impossible");
             }
         }
     }
