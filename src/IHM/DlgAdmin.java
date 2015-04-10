@@ -107,7 +107,7 @@ public class DlgAdmin extends JFrame {
             } else if (e.getSource() == bModifAgios ){
                 theDlgSetAgios = new DlgSetAgios(dlgMain);
             } else if (e.getSource() == bModifInteret){
-                theDlgSetInteret = new DlgSetInteret();
+                theDlgSetInteret = new DlgSetInteret(dlgMain);
             }
         }
     }

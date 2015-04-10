@@ -40,4 +40,8 @@ public class CompteEpargne extends Comptes {
         this.tauxInteret = tauxInteret;
     }
 
+    public double getTauxInteret(){
+        return this.tauxInteret;
+    }
+
 }

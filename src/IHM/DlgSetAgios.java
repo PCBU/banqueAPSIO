@@ -1,6 +1,7 @@
 package IHM;
 
 import Metier.CompteDepot;
+import Metier.Comptes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +20,7 @@ public class DlgSetAgios extends JFrame {
     AdaptateurBoutons unAdaptateurBoutons;
     JButton bSetAgios;
     List listCompteDepot;
+    TextField tfNewAgios;
     int iCodeClient;
 
     public DlgSetAgios(DlgMain dlg) {
@@ -30,6 +32,7 @@ public class DlgSetAgios extends JFrame {
         Panel pBouton = new Panel();
         FlowLayout flBouton = new FlowLayout();
 
+        tfNewAgios = new TextField("", 10);
         bSetAgios = new JButton("Modifier taux Agios");
         pBouton.add(bSetAgios);
 
@@ -38,6 +41,7 @@ public class DlgSetAgios extends JFrame {
 
         addWindowListener(new AdapFenetre());
 
+        getContentPane().add("North", tfNewAgios);
         getContentPane().add("Center", listCompteDepot);
         getContentPane().add("South", pBouton);
         setTitle("Liste des comptes");
@@ -52,6 +56,14 @@ public class DlgSetAgios extends JFrame {
 
             if (e.getSource() == bSetAgios) {
 
+                //dlgMain.listeCompte.getCompte(i).setTauxAgios(tfNewAgios.getText());
+                double tauxAgios = Double.parseDouble(tfNewAgios.getText());
+                int selectedIndex = listCompteDepot.getSelectedIndex();
+                String item = listCompteDepot.getItem(selectedIndex);
+                Integer integer = Integer.parseInt(item);
+                Comptes compte = dlgMain.listeCompte.getCompte(integer);
+                ((CompteDepot) compte).setTauxAgios(tauxAgios);
+                new DlgMessage(String.valueOf(((CompteDepot) compte).getTauxAgios()));
             }
         }
     }
