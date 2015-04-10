@@ -7,6 +7,8 @@ import java.io.*;
 import java.util.Vector;
 import Application.*;
 import Metier.Clients;
+import Metier.CompteDepot;
+import Metier.CompteEpargne;
 import Metier.Comptes;
 
 
@@ -27,8 +29,6 @@ public class DlgMain extends JFrame {
     JButton bAgios;
     JButton bTousComptes;
     JButton bQuitter;
-    //wtf
-
     AdaptateurBoutons unAdaptateurBoutons;
 
     JFrame passwordQuerying;
@@ -81,52 +81,51 @@ public class DlgMain extends JFrame {
         pack();
         setVisible(true);
 
-        //initialisations
         listeClient = new ListeClient();
         listeCompte = new ListeCompte();
 
-
         loadAccount();
 
-//
-
         bAdministrateur = false;
-
-
-
         dlgMain = this;
 
     }
     public void loadAccount(){
         Vector vc = new Vector();
         Vector vc2 = new Vector();
-
         FileReader reader;
         BufferedReader buffreader;
         String s;
-        String texte;
         String[] result;
+
         try {
             reader = new FileReader("client.txt");
             buffreader = new BufferedReader(reader);
             while ((s = buffreader.readLine()) != null) {
                 vc.add(s);
             }
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         for(int i = 0; i < vc.size() ; i++){
-            texte = (String)vc.elementAt(i);
-            result = texte.split(";");
+            s = (String)vc.elementAt(i);
+            result = s.split(";");
             listeClient.add(result[1],result[2],Integer.valueOf(result[0]));
-            for(int j = 3; j < result.length;j++){
-                listeClient.addCompteToClient(Integer.parseInt(result[j]) , Integer.valueOf(result[0]) );
-                listeCompte.addCompte(Integer.parseInt(result[j]) );
+            for(int j = 3; j < result.length;j=j+2){
+                if (("CE").equals(result[j + 1])){
+                    listeCompte.addCompteEpargne(Integer.parseInt(result[j]));
+                }
+                if (("CD").equals(result[j + 1])){
+                    listeCompte.addCompteDepot(Integer.parseInt(result[j]));
+                }
+                listeClient.addCompteToClient(Integer.parseInt(result[j]),listeClient.getCode(Integer.parseInt(result[0])));
             }
         }
+
+
         try {
             reader = new FileReader("compte.txt");
             buffreader = new BufferedReader(reader);
@@ -138,14 +137,11 @@ public class DlgMain extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         for(int i = 0; i < vc2.size() ; i++){
-            texte = (String)vc2.elementAt(i);
-            result = texte.split(";");
-            listeCompte.addMouvement(Integer.valueOf(result[0]), Double.valueOf(result[4]), result[6], true);
+            s = (String)vc2.elementAt(i);
+            result = s.split(";");
+            listeCompte.addMouvement(Integer.valueOf(result[0]), Double.valueOf(result[4]), result[5], true);
         }
-
-
     }
 
     class AdaptateurBoutons implements ActionListener {
@@ -155,6 +151,7 @@ public class DlgMain extends JFrame {
             } else if (e.getSource() == bClient) {
                 theDlgListeClient = new DlgListeClient(dlgMain);
             } else if (e.getSource() == bQuitter) {
+                save();
                 System.exit(0);
             } else if (e.getSource() == bAdmin) {
                 if (!bAdministrateur) {
@@ -219,62 +216,67 @@ public class DlgMain extends JFrame {
         }
     }
 
-
     class AdapFenetre extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
-
-                try {
-                    FileWriter fw = new FileWriter("compte.txt");
-                    BufferedWriter bw = new BufferedWriter(fw);
-
-                        String sMvt[][] = new String[100][100];
-                        String[][] sMouvement;
-
-                        for (int i = 0; i < listeCompte.size(); i++) {
-
-
-                            Comptes c = (Comptes) listeCompte.theComptes.elementAt(i);
-                            sMouvement = c.getMouvements();
-                            for (int j = 0; j < c.theMouvements.size(); j++) {
-                                if(sMouvement != null){
-                                        bw.write( Integer.toString(listeCompte.getCodeCompte(i)) + ";");
-                                        bw.write(sMouvement[j][1] + ";");
-                                        bw.write(sMouvement[j][2] + ";");
-                                        bw.write(sMouvement[j][3] + ";");
-                                        bw.write(sMouvement[j][4] + ";");
-                                        bw.write(sMouvement[j][5] + ";");
-                                        bw.write(sMouvement[j][6] + ";");
-                                        bw.write("\n");
-                                }
-                            }
-                        }
-
-                    bw.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            try {
-                FileWriter fw = new FileWriter("client.txt");
-                BufferedWriter bw = new BufferedWriter(fw);
-                Clients client;
-                for (int i = 0; i < listeClient.size();i++){
-                    client =  (Clients)listeClient.theClients.elementAt(i);
-                    bw.write(client.getCodeClient() + ";");
-                    bw.write(client.getNom() + ";");
-                    bw.write(client.getAdresse() + ";");
-
-                        for (int j = 0; j < dlgMain.listeClient.nbCptForClient(client.getCodeClient()); j++) {
-                            bw.write(Integer.toString(listeClient.cptClient(client.getCodeClient(),j)) + ";" );
-                        }
-
-                    bw.write("\n");
-                }
-                bw.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-
+            save();
             System.exit(0);
         }
     }
+    public void save(){
+        try {
+            FileWriter fw = new FileWriter("compte.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+            String[][] sMouvement;
+
+            for (int i = 0; i < listeCompte.size(); i++) {
+                Comptes c = (Comptes) listeCompte.theComptes.elementAt(i);
+                sMouvement = c.getMouvements();
+                for (int j = 0; j < c.theMouvements.size(); j++) {
+                    if(sMouvement != null){
+                        bw.write( Integer.toString(listeCompte.getCodeCompte(i)) + ";");
+                        bw.write(sMouvement[j][1] + ";");
+                        bw.write(sMouvement[j][2] + ";");
+                        bw.write(sMouvement[j][3] + ";");
+                        if(sMouvement[j][5] == null){
+                            bw.write(sMouvement[j][4] + ";");
+                        }else {
+                            bw.write(sMouvement[j][5] + ";");
+                        }
+                        bw.write(sMouvement[j][6] + ";");
+                        bw.write("\n");
+                    }
+                }
+            }
+            bw.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        try {
+            FileWriter fw = new FileWriter("client.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+            Clients client;
+            for (int i = 0; i < listeClient.size();i++){
+                client =  (Clients)listeClient.theClients.elementAt(i);
+                bw.write(client.getCodeClient() + ";");
+                bw.write(client.getNom() + ";");
+                bw.write(client.getAdresse() + ";");
+
+                for (int j = 0; j < dlgMain.listeClient.nbCptForClient(client.getCodeClient()); j++) {
+                    bw.write(Integer.toString(listeClient.cptClient(client.getCodeClient(),j)) + ";" );
+                    if(listeCompte.getCompte(listeClient.cptClient(client.getCodeClient(),j)) instanceof CompteEpargne){
+                        bw.write("CE;");
+                    }
+                    if(listeCompte.getCompte(listeClient.cptClient(client.getCodeClient(),j)) instanceof CompteDepot){
+                        bw.write("CD;");
+                    }
+                }
+                bw.write("\n");
+            }
+            bw.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
 }
+
+
