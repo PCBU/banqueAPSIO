@@ -6,6 +6,10 @@ import java.awt.event.*;
 import java.util.Vector;
 
 import Application.*;
+import Metier.Clients;
+import Metier.CompteDepot;
+import Metier.CompteEpargne;
+import Metier.Comptes;
 
 public class DlgMain extends JFrame {
     public DlgListeCompte theDlgListeCompte;
@@ -76,25 +80,66 @@ public class DlgMain extends JFrame {
         pack();
         setVisible(true);
 
-        //initialisations
         listeClient = new ListeClient();
         listeCompte = new ListeCompte();
-
-        listeClient.addCompteToClient(0, 1);
-        listeClient.addCompteToClient(2, 1);
-        listeClient.addCompteToClient(1, 2);
-        listeClient.addCompteToClient(3, 2);
-        listeClient.addCompteToClient(4, 2);
+        
+        loadAccount();
 
         bAdministrateur = false;
-
-        listeCompte.addMouvement(0, 100, "Création par défaut", true);
-        listeCompte.addMouvement(0, -20, "Création par défaut", true);
-        listeCompte.addMouvement(1, 10000, "Création par défaut", true);
-        listeCompte.addMouvement(2, 100, "Création par défaut", true);
-
         dlgMain = this;
+    }
+    public void loadAccount(){
+        Vector vc = new Vector();
+        Vector vc2 = new Vector();
+        FileReader reader;
+        BufferedReader buffreader;
+        String s;
+        String[] result;
 
+        try {
+            reader = new FileReader("client.txt");
+            buffreader = new BufferedReader(reader);
+            while ((s = buffreader.readLine()) != null) {
+                vc.add(s);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(int i = 0; i < vc.size() ; i++){
+            s = (String)vc.elementAt(i);
+            result = s.split(";");
+            listeClient.add(result[1],result[2],Integer.valueOf(result[0]));
+            for(int j = 3; j < result.length;j=j+2){
+                if (("CE").equals(result[j + 1])){
+                    listeCompte.addCompteEpargne(Integer.parseInt(result[j]));
+                }
+                if (("CD").equals(result[j + 1])){
+                    listeCompte.addCompteDepot(Integer.parseInt(result[j]));
+                }
+                listeClient.addCompteToClient(Integer.parseInt(result[j]),listeClient.getCode(Integer.parseInt(result[0])));
+            }
+        }
+
+
+        try {
+            reader = new FileReader("compte.txt");
+            buffreader = new BufferedReader(reader);
+            while ((s = buffreader.readLine()) != null) {
+                vc2.add(s);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(int i = 0; i < vc2.size() ; i++){
+            s = (String)vc2.elementAt(i);
+            result = s.split(";");
+            listeCompte.addMouvement(Integer.valueOf(result[0]), Double.valueOf(result[4]), result[5], true);
+        }
     }
 
     class AdaptateurBoutons implements ActionListener {
@@ -104,6 +149,7 @@ public class DlgMain extends JFrame {
             } else if (e.getSource() == bClient) {
                 theDlgListeClient = new DlgListeClient(dlgMain);
             } else if (e.getSource() == bQuitter) {
+                save();
                 System.exit(0);
             } else if (e.getSource() == bAdmin) {
                 if (!bAdministrateur) {
@@ -158,7 +204,63 @@ public class DlgMain extends JFrame {
 
     class AdapFenetre extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
+            save();
             System.exit(0);
+        }
+    }
+    public void save(){
+        try {
+            FileWriter fw = new FileWriter("compte.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+            String[][] sMouvement;
+
+            for (int i = 0; i < listeCompte.size(); i++) {
+                Comptes c = (Comptes) listeCompte.theComptes.elementAt(i);
+                sMouvement = c.getMouvements();
+                for (int j = 0; j < c.theMouvements.size(); j++) {
+                    if(sMouvement != null){
+                        bw.write( Integer.toString(listeCompte.getCodeCompte(i)) + ";");
+                        bw.write(sMouvement[j][1] + ";");
+                        bw.write(sMouvement[j][2] + ";");
+                        bw.write(sMouvement[j][3] + ";");
+                        if(sMouvement[j][5] == null){
+                            bw.write(sMouvement[j][4] + ";");
+                        }else {
+                            bw.write(sMouvement[j][5] + ";");
+                        }
+                        bw.write(sMouvement[j][6] + ";");
+                        bw.write("\n");
+                    }
+                }
+            }
+            bw.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        try {
+            FileWriter fw = new FileWriter("client.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+            Clients client;
+            for (int i = 0; i < listeClient.size();i++){
+                client =  (Clients)listeClient.theClients.elementAt(i);
+                bw.write(client.getCodeClient() + ";");
+                bw.write(client.getNom() + ";");
+                bw.write(client.getAdresse() + ";");
+
+                for (int j = 0; j < dlgMain.listeClient.nbCptForClient(client.getCodeClient()); j++) {
+                    bw.write(Integer.toString(listeClient.cptClient(client.getCodeClient(),j)) + ";" );
+                    if(listeCompte.getCompte(listeClient.cptClient(client.getCodeClient(),j)) instanceof CompteEpargne){
+                        bw.write("CE;");
+                    }
+                    if(listeCompte.getCompte(listeClient.cptClient(client.getCodeClient(),j)) instanceof CompteDepot){
+                        bw.write("CD;");
+                    }
+                }
+                bw.write("\n");
+            }
+            bw.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
     }
 }
