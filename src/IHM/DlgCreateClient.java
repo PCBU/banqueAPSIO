@@ -120,12 +120,12 @@ public class DlgCreateClient extends JFrame {
 
             }
         }
-    }//fin de AdaptateurBoutons
+    }
 
     class AdapFenetre extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
             setVisible(false);
         }
-    }//fin de AdapFenetre
+    }
 
-}//fin de DlgCreateClient 
+}

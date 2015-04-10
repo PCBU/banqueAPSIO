@@ -12,6 +12,8 @@ public class DlgMain extends JFrame {
     public DlgListeClient theDlgListeClient;
     public DlgDetailCompte theDlgDetailCompte;
     public DlgCreateClient theDlgCreateClient;
+    public DlgMessage theDlgMessage;
+    public DlgAdmin theDlgAdmin;
     public CalculAgios theCalculAgios;
     public CalculInteret theCalculInteret;
     public EditionReleves theEditionReleves;
@@ -22,9 +24,7 @@ public class DlgMain extends JFrame {
     JButton bAdmin;
     JButton bInteret;
     JButton bAgios;
-    JButton bTousComptes;
     JButton bQuitter;
-    //wtf
 
     AdaptateurBoutons unAdaptateurBoutons;
 
@@ -48,7 +48,6 @@ public class DlgMain extends JFrame {
         bAdmin = new JButton("Passer en mode Administrateur");
         bAgios = new JButton("Calculer les Agios");
         bInteret = new JButton("Calculer les Intérêts");
-        bTousComptes = new JButton("Opérations de tous les comptes");
         bQuitter = new JButton("Quitter l'application");
 
 
@@ -59,7 +58,6 @@ public class DlgMain extends JFrame {
         bAdmin.addActionListener(unAdaptateurBoutons);
         bAgios.addActionListener(unAdaptateurBoutons);
         bInteret.addActionListener(unAdaptateurBoutons);
-        bTousComptes.addActionListener(unAdaptateurBoutons);
         bQuitter.addActionListener(unAdaptateurBoutons);
 
         addWindowListener(new AdapFenetre());
@@ -114,23 +112,22 @@ public class DlgMain extends JFrame {
                     username = new JTextField("Username", 20);
                     password = new JTextField("Password", 20);
                     bValidate = new JButton("OK");
-
-                    passwordQuerying.getContentPane().setLayout(new GridLayout(2, 2));
-                    passwordQuerying.getContentPane().add(username);
-                    passwordQuerying.getContentPane().add(password);
                     bValidate.addActionListener(unAdaptateurBoutons);
-                    passwordQuerying.getContentPane().add(bValidate);
-                    setFocusable(false);
-                    passwordQuerying.setVisible(true);
-                } else {
-                    getContentPane().remove(bAgios);
-                    getContentPane().remove(bInteret);
-                    getContentPane().remove(bTousComptes);
-                    getContentPane().setLayout(new GridLayout(2, 3));
 
-                    bAdministrateur = false;
-                    bAdmin.setText("Passer en mode Administrateur");
-                    setTitle("Gestion des comptes - Employé");
+                    Panel pFields = new Panel(new GridLayout(1, 2));
+                    pFields.add(username);
+                    pFields.add(password);
+
+                    Panel pButton = new Panel(new GridLayout(1, 1));
+                    pButton.add(bValidate);
+
+                    passwordQuerying.getContentPane().setLayout(new GridLayout(2, 1));
+                    passwordQuerying.getContentPane().add(pFields);
+                    passwordQuerying.getContentPane().add(pButton);
+                    setFocusable(false);
+                    passwordQuerying.setLocationRelativeTo(null);
+                    passwordQuerying.pack();
+                    passwordQuerying.setVisible(true);
                 }
             } else if (e.getSource() == bAgios) {
                 for (int i = 0; i < listeCompte.size(); i++) {
@@ -146,22 +143,11 @@ public class DlgMain extends JFrame {
                         theCalculInteret = new CalculInteret(listeCompte, listeCompte.getCodeCompte(i));
                     }
                 }
-            } else if (e.getSource() == bTousComptes) {
-                theDlgDetailCompte = new DlgDetailCompte(dlgMain);
             } else if (e.getSource() == bValidate) {
                 if (username.getText().equals("admin") && password.getText().equals("password")) {
-                    getContentPane().add(bAgios);
-                    getContentPane().add(bInteret);
-                    getContentPane().add(bTousComptes);
-                    getContentPane().setLayout(new GridLayout(3, 3));
-
-                    bAdministrateur = true;
-                    bAdmin.setText("Passer en mode Employé");
-                    setTitle("Gestion des comptes - Administrateur");
+                    theDlgAdmin = new DlgAdmin(dlgMain);
                 } else {
-                    JFrame alert = new JFrame("Error");
-                    alert.add(new JLabel("Identifiants incorrects"));
-                    alert.setVisible(true);
+                    theDlgMessage = new DlgMessage("Identifiants incorrects");
                 }
 
                 passwordQuerying.setVisible(false);
