@@ -7,7 +7,7 @@ import IHM.DlgMessage;
 
 public class CompteDepot extends Comptes {
     private double tauxAgios = 0.2;
-    private double decouvertAutorise =0 ;
+    private double decouvertAutorise = 0 ;
 
     /**
      * @roseuid 3D246183035C
@@ -35,6 +35,7 @@ public class CompteDepot extends Comptes {
         if (dSolde < 0) {
             dResultat = tauxAgios * dSolde * -1;
         }
+
         return dResultat;
     }
     public double getAutorisationDecouvert(){

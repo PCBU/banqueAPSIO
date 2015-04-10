@@ -6,18 +6,27 @@ import Metier.CompteDepot;
 
 public class CalculAgios {
     public CompteDepot theCompteDepot;
+    private  double montantAGIO;
+
+
+    public double getMontantAGIO() {
+        return montantAGIO;
+    }
+
 
     /**
      * @roseuid 3D24617500BE
      */
     public CalculAgios(ListeCompte lc, int iCodeCpt) {
-        for (int i = 0; i < lc.size(); i++) {
-            if (lc.getCodeCompte(i) == iCodeCpt) {
-                theCompteDepot = (CompteDepot) lc.getCompte(i);
-            }
-        }
+
+        theCompteDepot = (CompteDepot) lc.getCompte(iCodeCpt);
+
+
         if (theCompteDepot.getSolde() < 0) {
-            theCompteDepot.debiter(theCompteDepot.calculerAgios(), "Agios");
+           montantAGIO =  theCompteDepot.calculerAgios();
+           theCompteDepot.debiter(montantAGIO, "Agios");
+
         }
+
     }
 }

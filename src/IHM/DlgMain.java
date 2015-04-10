@@ -182,18 +182,26 @@ public class DlgMain extends JFrame {
                     setTitle("Gestion des comptes - Employé");
                 }
             } else if (e.getSource() == bAgios) {
+                double agiotot = 0;
                 for (int i = 0; i < listeCompte.size(); i++) {
                     String sClassName = (listeCompte.getCompte(listeCompte.getCodeCompte(i)).getClass()).getName();
                     if (sClassName.equals("Metier.CompteDepot")) {
+
                         theCalculAgios = new CalculAgios(listeCompte, listeCompte.getCodeCompte(i));
+                        agiotot += theCalculAgios.getMontantAGIO();
                     }
                 }
+                new DlgMessage("Agios calculées : " + agiotot);
             } else if (e.getSource() == bInteret) {
+                double intererTot = 0;
                 for (int i = 0; i < listeCompte.size(); i++) {
                     String sClassName = (listeCompte.getCompte(listeCompte.getCodeCompte(i)).getClass()).getName();
                     if (sClassName.equals("Metier.CompteEpargne")) {
                         theCalculInteret = new CalculInteret(listeCompte, listeCompte.getCodeCompte(i));
+
+                        intererTot += theCalculInteret.getInteret();
                     }
+                    new DlgMessage("Agios calculées : " + intererTot);
                 }
             } else if (e.getSource() == bTousComptes) {
                 theDlgDetailCompte = new DlgDetailCompte(dlgMain);
