@@ -146,6 +146,7 @@ public class DlgListeCompte extends JFrame {
                     FileWriter fw = new FileWriter("releve.txt");
                     fw.write(new OperationsCompte(dlgMain.listeCompte, listCompte.getSelectedIndex()).getReleve());
                     fw.close();
+                    new DlgMessage("Relevé de compte généré dans le fichier releve.txt");
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
