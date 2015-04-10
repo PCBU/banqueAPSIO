@@ -6,16 +6,22 @@ import Metier.CompteEpargne;
 
 public class CalculInteret {
     public CompteEpargne theCompteEpargne;
+    private double interet;
+
+    public double getInteret() {
+        return interet;
+    }
+
+
 
     /**
      * @roseuid 3D2461720186
      */
     public CalculInteret(ListeCompte lc, int iCodeCpt) {
-        for (int i = 0; i < lc.size(); i++) {
-            if (lc.getCodeCompte(i) == iCodeCpt) {
-                theCompteEpargne = (CompteEpargne) lc.getCompte(i);
-            }
-        }
+
+            theCompteEpargne = (CompteEpargne) lc.getCompte(iCodeCpt);
+
         theCompteEpargne.crediter(theCompteEpargne.calculerInteret(), "Intérêts");
+        interet = theCompteEpargne.calculerInteret();
     }
 }

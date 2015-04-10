@@ -12,6 +12,8 @@ import java.util.Vector;
 
 public class DlgAdmin extends JFrame {
 
+
+    public CalculAgios theCalculAgios;
     public CalculInteret theCalculInteret;
 
     JButton bInteret;
@@ -60,42 +62,46 @@ public class DlgAdmin extends JFrame {
         setVisible(true);
 
         //initialisations
-        listeClient = new ListeClient();
-        listeCompte = new ListeCompte();
-
-        listeClient.addCompteToClient(0, 1);
-        listeClient.addCompteToClient(2, 1);
-        listeClient.addCompteToClient(1, 2);
-        listeClient.addCompteToClient(3, 2);
-        listeClient.addCompteToClient(4, 2);
-
-        bAdministrateur = false;
-
-        listeCompte.addMouvement(0, 100, "Création par défaut", true);
-        listeCompte.addMouvement(0, -20, "Création par défaut", true);
-        listeCompte.addMouvement(1, 10000, "Création par défaut", true);
-        listeCompte.addMouvement(2, 100, "Création par défaut", true);
 
         this.dlgMain = dlgMain;
-
+        listeCompte = dlgMain.listeCompte;
+        listeClient = dlgMain.listeClient;
     }
 
     class AdaptateurBoutons implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == bQuitter) {
                 setVisible(false);
+            } else if (e.getSource() == bTousComptes) {
+                theDlgDetailCompte = new DlgDetailCompte(dlgMain);
+            } else if (e.getSource() == bAgios) {
+                double agiotot = 0;
+                for (int i = 0; i < listeCompte.size(); i++) {
+                    String sClassName = (listeCompte.getCompte(listeCompte.getCodeCompte(i)).getClass()).getName();
+                    if (sClassName.equals("Metier.CompteDepot")) {
+
+                        theCalculAgios = new CalculAgios(listeCompte, listeCompte.getCodeCompte(i));
+                        agiotot += theCalculAgios.getMontantAGIO();
+                    }
+                }
+                new DlgMessage("Agios calculées : " + agiotot);
+
             } else if (e.getSource() == bInteret) {
+                double intererTot = 0;
                 for (int i = 0; i < listeCompte.size(); i++) {
                     String sClassName = (listeCompte.getCompte(listeCompte.getCodeCompte(i)).getClass()).getName();
                     if (sClassName.equals("Metier.CompteEpargne")) {
                         theCalculInteret = new CalculInteret(listeCompte, listeCompte.getCodeCompte(i));
+
+                        intererTot += theCalculInteret.getInteret();
                     }
+
                 }
-            } else if (e.getSource() == bTousComptes) {
-                theDlgDetailCompte = new DlgDetailCompte(dlgMain);
+                new DlgMessage("Interet calculées : " + intererTot);
             }
         }
     }
+
 
     class AdapFenetre extends WindowAdapter {
         public void windowClosing(WindowEvent e) {

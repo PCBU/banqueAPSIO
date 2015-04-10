@@ -20,8 +20,7 @@ public class DlgMain extends JFrame {
     public DlgListeClient theDlgListeClient;
     public DlgMessage theDlgMessage;
     public DlgAdmin theDlgAdmin;
-    public CalculAgios theCalculAgios;
-    public CalculInteret theCalculInteret;
+
 
     JButton bCompte;
     JButton bClient;
@@ -169,20 +168,7 @@ public class DlgMain extends JFrame {
                     passwordQuerying.pack();
                     passwordQuerying.setVisible(true);
                 }
-            } else if (e.getSource() == bAgios) {
-                for (int i = 0; i < listeCompte.size(); i++) {
-                    String sClassName = (listeCompte.getCompte(listeCompte.getCodeCompte(i)).getClass()).getName();
-                    if (sClassName.equals("Metier.CompteDepot")) {
-                        theCalculAgios = new CalculAgios(listeCompte, listeCompte.getCodeCompte(i));
-                    }
-                }
-            } else if (e.getSource() == bInteret) {
-                for (int i = 0; i < listeCompte.size(); i++) {
-                    String sClassName = (listeCompte.getCompte(listeCompte.getCodeCompte(i)).getClass()).getName();
-                    if (sClassName.equals("Metier.CompteEpargne")) {
-                        theCalculInteret = new CalculInteret(listeCompte, listeCompte.getCodeCompte(i));
-                    }
-                }
+
             } else if (e.getSource() == bValidate) {
                 if (username.getText().equals("admin") && password.getText().equals("password")) {
                     theDlgAdmin = new DlgAdmin(dlgMain);
