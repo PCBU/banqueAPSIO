@@ -18,6 +18,11 @@ public class ListeCompte {
      */
     public ListeCompte() {
         theComptes = new Vector();
+        addCompteEpargne(0);
+        addCompteEpargne(1);
+        addCompteEpargne(2);
+        addCompteDepot(3);
+        addCompteDepot(4);
     }
 
     public ListeCompte(Vector<Comptes> comptes) {

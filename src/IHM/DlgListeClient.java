@@ -114,8 +114,8 @@ public class DlgListeClient extends JFrame {
                 int iEspace = sCode.indexOf(" ");
                 sCode = sCode.substring(0, iEspace);
                 int iCode = Integer.parseInt(sCode);
-                new DlgListeCompte(dlgMain, iCode);
 
+                new DlgListeCompte(dlgMain, iCode);
             } else if (e.getSource() == bNouvCpt) {
                 int iNextCode = dlgMain.listeCompte.size();
                 if (iNextCode != 0) {
