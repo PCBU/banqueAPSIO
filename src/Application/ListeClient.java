@@ -15,9 +15,6 @@ public class ListeClient {
      */
     public ListeClient() {
         theClients = new Vector();
-
-
-
     }
 
     public void add(String nomCli, String adrCli, int codeCli) {

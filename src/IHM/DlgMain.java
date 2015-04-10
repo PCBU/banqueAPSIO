@@ -1,33 +1,34 @@
 package IHM;
 
-import java.awt.*;
-import javax.swing.*;
-import java.awt.event.*;
-import java.io.*;
-import java.util.Vector;
 import Application.*;
 import Metier.Clients;
+import Metier.CompteDepot;
+import Metier.CompteEpargne;
 import Metier.Comptes;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.*;
+import java.util.Vector;
 
 public class DlgMain extends JFrame {
     public DlgListeCompte theDlgListeCompte;
     public DlgListeClient theDlgListeClient;
-    public DlgDetailCompte theDlgDetailCompte;
-    public DlgCreateClient theDlgCreateClient;
+    public DlgMessage theDlgMessage;
+    public DlgAdmin theDlgAdmin;
     public CalculAgios theCalculAgios;
     public CalculInteret theCalculInteret;
-    public EditionReleves theEditionReleves;
-    public EditionAvertissements theEditionAvertissements;
 
     JButton bCompte;
     JButton bClient;
     JButton bAdmin;
     JButton bInteret;
     JButton bAgios;
-    JButton bTousComptes;
     JButton bQuitter;
-    //wtf
 
     AdaptateurBoutons unAdaptateurBoutons;
 
@@ -36,8 +37,6 @@ public class DlgMain extends JFrame {
     JTextField password;
     JButton bValidate;
 
-
-    Vector vCompte = new Vector();
     ListeClient listeClient;
     ListeCompte listeCompte;
     boolean bAdministrateur;
@@ -51,7 +50,6 @@ public class DlgMain extends JFrame {
         bAdmin = new JButton("Passer en mode Administrateur");
         bAgios = new JButton("Calculer les Agios");
         bInteret = new JButton("Calculer les Intérêts");
-        bTousComptes = new JButton("Opérations de tous les comptes");
         bQuitter = new JButton("Quitter l'application");
 
 
@@ -62,7 +60,6 @@ public class DlgMain extends JFrame {
         bAdmin.addActionListener(unAdaptateurBoutons);
         bAgios.addActionListener(unAdaptateurBoutons);
         bInteret.addActionListener(unAdaptateurBoutons);
-        bTousComptes.addActionListener(unAdaptateurBoutons);
         bQuitter.addActionListener(unAdaptateurBoutons);
 
         addWindowListener(new AdapFenetre());
@@ -81,71 +78,62 @@ public class DlgMain extends JFrame {
         pack();
         setVisible(true);
 
-        //initialisations
         listeClient = new ListeClient();
         listeCompte = new ListeCompte();
-
-
+        
         loadAccount();
 
-//
-
         bAdministrateur = false;
-
-
-
         dlgMain = this;
-
     }
     public void loadAccount(){
         Vector vc = new Vector();
         Vector vc2 = new Vector();
-
         FileReader reader;
-        BufferedReader buffreader;
+        BufferedReader bufferedReader;
         String s;
-        String texte;
         String[] result;
+
         try {
             reader = new FileReader("client.txt");
-            buffreader = new BufferedReader(reader);
-            while ((s = buffreader.readLine()) != null) {
+            bufferedReader = new BufferedReader(reader);
+            while ((s = bufferedReader.readLine()) != null) {
                 vc.add(s);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
         for(int i = 0; i < vc.size() ; i++){
-            texte = (String)vc.elementAt(i);
-            result = texte.split(";");
+            s = (String)vc.elementAt(i);
+            result = s.split(";");
             listeClient.add(result[1],result[2],Integer.valueOf(result[0]));
-            for(int j = 3; j < result.length;j++){
-                listeClient.addCompteToClient(Integer.parseInt(result[j]) , Integer.valueOf(result[0]) );
-                listeCompte.addCompte(Integer.parseInt(result[j]) );
+            for(int j = 3; j < result.length;j=j+2){
+                if (("CE").equals(result[j + 1])){
+                    listeCompte.addCompteEpargne(Integer.parseInt(result[j]));
+                }
+                if (("CD").equals(result[j + 1])){
+                    listeCompte.addCompteDepot(Integer.parseInt(result[j]));
+                }
+                listeClient.addCompteToClient(Integer.parseInt(result[j]), listeClient.getCode(Integer.parseInt(result[0])));
             }
         }
+
+
         try {
             reader = new FileReader("compte.txt");
-            buffreader = new BufferedReader(reader);
-            while ((s = buffreader.readLine()) != null) {
+            bufferedReader = new BufferedReader(reader);
+            while ((s = bufferedReader.readLine()) != null) {
                 vc2.add(s);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
         for(int i = 0; i < vc2.size() ; i++){
-            texte = (String)vc2.elementAt(i);
-            result = texte.split(";");
-            listeCompte.addMouvement(Integer.valueOf(result[0]), Double.valueOf(result[4]), result[6], true);
+            s = (String)vc2.elementAt(i);
+            result = s.split(";");
+            listeCompte.addMouvement(Integer.valueOf(result[0]), Double.valueOf(result[4]), result[5], true);
         }
-
-
     }
 
     class AdaptateurBoutons implements ActionListener {
@@ -155,6 +143,7 @@ public class DlgMain extends JFrame {
             } else if (e.getSource() == bClient) {
                 theDlgListeClient = new DlgListeClient(dlgMain);
             } else if (e.getSource() == bQuitter) {
+                save();
                 System.exit(0);
             } else if (e.getSource() == bAdmin) {
                 if (!bAdministrateur) {
@@ -163,23 +152,22 @@ public class DlgMain extends JFrame {
                     username = new JTextField("Username", 20);
                     password = new JTextField("Password", 20);
                     bValidate = new JButton("OK");
-
-                    passwordQuerying.getContentPane().setLayout(new GridLayout(2, 2));
-                    passwordQuerying.getContentPane().add(username);
-                    passwordQuerying.getContentPane().add(password);
                     bValidate.addActionListener(unAdaptateurBoutons);
-                    passwordQuerying.getContentPane().add(bValidate);
-                    setFocusable(false);
-                    passwordQuerying.setVisible(true);
-                } else {
-                    getContentPane().remove(bAgios);
-                    getContentPane().remove(bInteret);
-                    getContentPane().remove(bTousComptes);
-                    getContentPane().setLayout(new GridLayout(2, 3));
 
-                    bAdministrateur = false;
-                    bAdmin.setText("Passer en mode Administrateur");
-                    setTitle("Gestion des comptes - Employé");
+                    Panel pFields = new Panel(new GridLayout(1, 2));
+                    pFields.add(username);
+                    pFields.add(password);
+
+                    Panel pButton = new Panel(new GridLayout(1, 1));
+                    pButton.add(bValidate);
+
+                    passwordQuerying.getContentPane().setLayout(new GridLayout(2, 1));
+                    passwordQuerying.getContentPane().add(pFields);
+                    passwordQuerying.getContentPane().add(pButton);
+                    setFocusable(false);
+                    passwordQuerying.setLocationRelativeTo(null);
+                    passwordQuerying.pack();
+                    passwordQuerying.setVisible(true);
                 }
             } else if (e.getSource() == bAgios) {
                 double agiotot = 0;
@@ -203,22 +191,11 @@ public class DlgMain extends JFrame {
                     }
                     new DlgMessage("Agios calculées : " + intererTot);
                 }
-            } else if (e.getSource() == bTousComptes) {
-                theDlgDetailCompte = new DlgDetailCompte(dlgMain);
             } else if (e.getSource() == bValidate) {
                 if (username.getText().equals("admin") && password.getText().equals("password")) {
-                    getContentPane().add(bAgios);
-                    getContentPane().add(bInteret);
-                    getContentPane().add(bTousComptes);
-                    getContentPane().setLayout(new GridLayout(3, 3));
-
-                    bAdministrateur = true;
-                    bAdmin.setText("Passer en mode Employé");
-                    setTitle("Gestion des comptes - Administrateur");
+                    theDlgAdmin = new DlgAdmin(dlgMain);
                 } else {
-                    JFrame alert = new JFrame("Error");
-                    alert.add(new JLabel("Identifiants incorrects"));
-                    alert.setVisible(true);
+                    theDlgMessage = new DlgMessage("Identifiants incorrects");
                 }
 
                 passwordQuerying.setVisible(false);
@@ -227,62 +204,65 @@ public class DlgMain extends JFrame {
         }
     }
 
-
     class AdapFenetre extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
-
-                try {
-                    FileWriter fw = new FileWriter("compte.txt");
-                    BufferedWriter bw = new BufferedWriter(fw);
-
-                        String sMvt[][] = new String[100][100];
-                        String[][] sMouvement;
-
-                        for (int i = 0; i < listeCompte.size(); i++) {
-
-
-                            Comptes c = (Comptes) listeCompte.theComptes.elementAt(i);
-                            sMouvement = c.getMouvements();
-                            for (int j = 0; j < c.theMouvements.size(); j++) {
-                                if(sMouvement != null){
-                                        bw.write( Integer.toString(listeCompte.getCodeCompte(i)) + ";");
-                                        bw.write(sMouvement[j][1] + ";");
-                                        bw.write(sMouvement[j][2] + ";");
-                                        bw.write(sMouvement[j][3] + ";");
-                                        bw.write(sMouvement[j][4] + ";");
-                                        bw.write(sMouvement[j][5] + ";");
-                                        bw.write(sMouvement[j][6] + ";");
-                                        bw.write("\n");
-                                }
-                            }
-                        }
-
-                    bw.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            try {
-                FileWriter fw = new FileWriter("client.txt");
-                BufferedWriter bw = new BufferedWriter(fw);
-                Clients client;
-                for (int i = 0; i < listeClient.size();i++){
-                    client =  (Clients)listeClient.theClients.elementAt(i);
-                    bw.write(client.getCodeClient() + ";");
-                    bw.write(client.getNom() + ";");
-                    bw.write(client.getAdresse() + ";");
-
-                        for (int j = 0; j < dlgMain.listeClient.nbCptForClient(client.getCodeClient()); j++) {
-                            bw.write(Integer.toString(listeClient.cptClient(client.getCodeClient(),j)) + ";" );
-                        }
-
-                    bw.write("\n");
-                }
-                bw.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-
+            save();
             System.exit(0);
+        }
+    }
+    public void save(){
+        try {
+            FileWriter fw = new FileWriter("compte.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+            String[][] sMouvement;
+
+            for (int i = 0; i < listeCompte.size(); i++) {
+                Comptes c = (Comptes) listeCompte.theComptes.elementAt(i);
+                sMouvement = c.getMouvements();
+                for (int j = 0; j < c.theMouvements.size(); j++) {
+                    if(sMouvement != null){
+                        bw.write( Integer.toString(listeCompte.getCodeCompte(i)) + ";");
+                        bw.write(sMouvement[j][1] + ";");
+                        bw.write(sMouvement[j][2] + ";");
+                        bw.write(sMouvement[j][3] + ";");
+                        if(sMouvement[j][5] == null){
+                            bw.write(sMouvement[j][4] + ";");
+                        }else {
+                            bw.write(sMouvement[j][5] + ";");
+                        }
+                        bw.write(sMouvement[j][6] + ";");
+                        bw.write("\n");
+                    }
+                }
+            }
+            bw.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        try {
+            FileWriter fw = new FileWriter("client.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+            Clients client;
+            for (int i = 0; i < listeClient.size();i++){
+                client =  (Clients)listeClient.theClients.elementAt(i);
+                bw.write(client.getCodeClient() + ";");
+                bw.write(client.getNom() + ";");
+                bw.write(client.getAdresse() + ";");
+
+                for (int j = 0; j < dlgMain.listeClient.nbCptForClient(client.getCodeClient()); j++) {
+                    bw.write(Integer.toString(listeClient.cptClient(client.getCodeClient(),j)) + ";" );
+                    if(listeCompte.getCompte(listeClient.cptClient(client.getCodeClient(),j)) instanceof CompteEpargne){
+                        bw.write("CE;");
+                    }
+                    if(listeCompte.getCompte(listeClient.cptClient(client.getCodeClient(),j)) instanceof CompteDepot){
+                        bw.write("CD;");
+                    }
+                }
+                bw.write("\n");
+            }
+            bw.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
     }
 }
