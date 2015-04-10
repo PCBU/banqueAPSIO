@@ -18,11 +18,6 @@ public class ListeCompte {
      */
     public ListeCompte() {
         theComptes = new Vector();
-        addCompteEpargne(0);
-        addCompteEpargne(1);
-        addCompteEpargne(2);
-        addCompteDepot(3);
-        addCompteDepot(4);
     }
 
     public ListeCompte(Vector<Comptes> comptes) {
@@ -80,7 +75,7 @@ public class ListeCompte {
             }
         }
         if (c == null) {
-            System.out.println("Erreur de récupération du compte : " + iCode);
+            System.out.println("Erreur de rï¿½cupï¿½ration du compte : " + iCode);
         }
         return c;
     }
@@ -124,7 +119,7 @@ public class ListeCompte {
                 if (dMontant < 0) {
                     if (c.getSolde() + dMontant < 0) {
                         if (bAdmin) {
-                            c.debiter(dMontant * -1, sDesc + " (Débit exceptionnel)");
+                            c.debiter(dMontant * -1, sDesc + " (Dï¿½bit exceptionnel)");
                         } else {
                             bOK = false;
                         }

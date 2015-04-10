@@ -15,11 +15,6 @@ public class ListeClient {
      */
     public ListeClient() {
         theClients = new Vector();
-
-        //Initialisation du tableau client
-        add("Nom1 par défaut", "Adr1 par défaut", 1);
-        add("Nom2 par défaut", "Adr2 par défaut", 2);
-
     }
 
     public void add(String nomCli, String adrCli, int codeCli) {

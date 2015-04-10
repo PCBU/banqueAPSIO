@@ -1,27 +1,27 @@
 package IHM;
 
-import java.awt.*;
-import javax.swing.*;
-import java.awt.event.*;
-import java.util.Vector;
-
 import Application.*;
 import Metier.Clients;
 import Metier.CompteDepot;
 import Metier.CompteEpargne;
 import Metier.Comptes;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.*;
+import java.util.Vector;
+
 public class DlgMain extends JFrame {
     public DlgListeCompte theDlgListeCompte;
     public DlgListeClient theDlgListeClient;
-    public DlgDetailCompte theDlgDetailCompte;
-    public DlgCreateClient theDlgCreateClient;
     public DlgMessage theDlgMessage;
     public DlgAdmin theDlgAdmin;
     public CalculAgios theCalculAgios;
     public CalculInteret theCalculInteret;
-    public EditionReleves theEditionReleves;
-    public EditionAvertissements theEditionAvertissements;
 
     JButton bCompte;
     JButton bClient;
@@ -37,8 +37,6 @@ public class DlgMain extends JFrame {
     JTextField password;
     JButton bValidate;
 
-
-    Vector vCompte = new Vector();
     ListeClient listeClient;
     ListeCompte listeCompte;
     boolean bAdministrateur;
@@ -92,20 +90,18 @@ public class DlgMain extends JFrame {
         Vector vc = new Vector();
         Vector vc2 = new Vector();
         FileReader reader;
-        BufferedReader buffreader;
+        BufferedReader bufferedReader;
         String s;
         String[] result;
 
         try {
             reader = new FileReader("client.txt");
-            buffreader = new BufferedReader(reader);
-            while ((s = buffreader.readLine()) != null) {
+            bufferedReader = new BufferedReader(reader);
+            while ((s = bufferedReader.readLine()) != null) {
                 vc.add(s);
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         for(int i = 0; i < vc.size() ; i++){
@@ -119,20 +115,18 @@ public class DlgMain extends JFrame {
                 if (("CD").equals(result[j + 1])){
                     listeCompte.addCompteDepot(Integer.parseInt(result[j]));
                 }
-                listeClient.addCompteToClient(Integer.parseInt(result[j]),listeClient.getCode(Integer.parseInt(result[0])));
+                listeClient.addCompteToClient(Integer.parseInt(result[j]), listeClient.getCode(Integer.parseInt(result[0])));
             }
         }
 
 
         try {
             reader = new FileReader("compte.txt");
-            buffreader = new BufferedReader(reader);
-            while ((s = buffreader.readLine()) != null) {
+            bufferedReader = new BufferedReader(reader);
+            while ((s = bufferedReader.readLine()) != null) {
                 vc2.add(s);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         for(int i = 0; i < vc2.size() ; i++){
