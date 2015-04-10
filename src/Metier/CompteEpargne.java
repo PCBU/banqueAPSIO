@@ -36,4 +36,8 @@ public class CompteEpargne extends Comptes {
         }
     }
 
+    public void setTauxInteret (double tauxInteret) {
+        this.tauxInteret = tauxInteret;
+    }
+
 }

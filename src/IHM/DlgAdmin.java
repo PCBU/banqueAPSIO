@@ -13,9 +13,13 @@ import java.util.Vector;
 public class DlgAdmin extends JFrame {
 
     public CalculInteret theCalculInteret;
+    public DlgSetAgios theDlgSetAgios;
+    public DlgSetInteret theDlgSetInteret;
 
     JButton bInteret;
     JButton bAgios;
+    JButton bModifAgios;
+    JButton bModifInteret;
     JButton bTousComptes;
     JButton bQuitter;
 
@@ -31,16 +35,21 @@ public class DlgAdmin extends JFrame {
     public DlgAdmin(DlgMain dlgMain) {
         //Création des controles
         bAgios = new JButton("Calculer les Agios");
+        bModifAgios = new JButton("Modifier le taux d'agios d'un compte");
         bInteret = new JButton("Calculer les Intérêts");
         bTousComptes = new JButton("Opérations de tous les comptes");
+        bModifInteret = new JButton("Modifier le taux d'intérêt d'un compte");
+
         bQuitter = new JButton("Passer en mode Employé");
 
 
         //evenements sur controles
         unAdaptateurBoutons = new AdaptateurBoutons();
         bAgios.addActionListener(unAdaptateurBoutons);
-        bInteret.addActionListener(unAdaptateurBoutons);
+        bModifAgios.addActionListener(unAdaptateurBoutons);
         bTousComptes.addActionListener(unAdaptateurBoutons);
+        bInteret.addActionListener(unAdaptateurBoutons);
+        bModifInteret.addActionListener(unAdaptateurBoutons);
         bQuitter.addActionListener(unAdaptateurBoutons);
 
         addWindowListener(new AdapFenetre());
@@ -50,11 +59,13 @@ public class DlgAdmin extends JFrame {
         //ajout des controles
         getContentPane().setLayout(new GridLayout(2, 3));
         getContentPane().add(bAgios);
-        getContentPane().add(bInteret);
+        getContentPane().add(bModifAgios);
         getContentPane().add(bTousComptes);
+        getContentPane().add(bInteret);
+        getContentPane().add(bModifInteret);
         getContentPane().add(bQuitter);
 
-        setTitle("Gestion des comptes - Employé");
+        setTitle("Gestion des comptes - Admin");
 
         pack();
         setVisible(true);
@@ -93,6 +104,10 @@ public class DlgAdmin extends JFrame {
                 }
             } else if (e.getSource() == bTousComptes) {
                 theDlgDetailCompte = new DlgDetailCompte(dlgMain);
+            } else if (e.getSource() == bModifAgios ){
+                theDlgSetAgios = new DlgSetAgios(dlgMain);
+            } else if (e.getSource() == bModifInteret){
+                theDlgSetInteret = new DlgSetInteret();
             }
         }
     }

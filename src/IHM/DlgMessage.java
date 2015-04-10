@@ -3,7 +3,6 @@ package IHM;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import Application.*;
 
 /**
  * Created by S219 on 01/04/2015.

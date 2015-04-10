@@ -52,4 +52,8 @@ public class CompteDepot extends Comptes {
             }
         }
     }
+
+    public void setTauxAgios(double tauxAgios){
+        this.tauxAgios = tauxAgios;
+    }
 }

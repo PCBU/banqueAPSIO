@@ -61,9 +61,6 @@ public class DlgListeCompte extends JFrame {
         bFermer = new JButton("Fermer");
         pBouton.add(bFermer);
         bDebitExceptionnel = new JButton("Débit exceptionnel");
-        if (dlgMain.bAdministrateur) {
-            pBouton.add(bDebitExceptionnel);
-        }
         bReleve = new JButton("Générer relevé");
         pBouton.add(bReleve);
 
