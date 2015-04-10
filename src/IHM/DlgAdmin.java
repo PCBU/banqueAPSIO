@@ -95,8 +95,9 @@ public class DlgAdmin extends JFrame {
 
                         intererTot += theCalculInteret.getInteret();
                     }
-                    new DlgMessage("Agios calculées : " + intererTot);
+
                 }
+                new DlgMessage("Interet calculées : " + intererTot);
             }
         }
     }
